@@ -7,7 +7,7 @@ Comprehensive styling reference for React Email templates.
 Use the `Tailwind` component for styling if the project uses Tailwind CSS. Otherwise, use inline styles.
 
 ```tsx
-import { Tailwind, pixelBasedPreset } from '@react-email/components';
+import { Tailwind, pixelBasedPreset } from "@react-email/components";
 
 <Tailwind
   config={{
@@ -15,14 +15,14 @@ import { Tailwind, pixelBasedPreset } from '@react-email/components';
     theme: {
       extend: {
         colors: {
-          brand: '#007bff',
+          brand: "#007bff",
         },
       },
     },
   }}
 >
   {/* Email content */}
-</Tailwind>
+</Tailwind>;
 ```
 
 ## pixelBasedPreset
@@ -156,11 +156,7 @@ Use consistent spacing that respects content hierarchy. Larger margins for headi
 - Include `alt` text for accessibility
 
 ```tsx
-<Img
-  src="https://example.com/image.png"
-  alt="Description"
-  className="w-full h-auto"
-/>
+<Img src="https://example.com/image.png" alt="Description" className="w-full h-auto" />
 ```
 
 ## Buttons
@@ -228,7 +224,7 @@ Create a centralized Tailwind config file that all email templates import. Using
 
 ```tsx
 // emails/tailwind.config.ts
-import { pixelBasedPreset, type TailwindConfig } from '@react-email/components';
+import { pixelBasedPreset, type TailwindConfig } from "@react-email/components";
 
 export default {
   presets: [pixelBasedPreset],
@@ -236,8 +232,8 @@ export default {
     extend: {
       colors: {
         brand: {
-          primary: '#007bff',
-          secondary: '#6c757d',
+          primary: "#007bff",
+          secondary: "#6c757d",
         },
       },
     },
@@ -247,8 +243,8 @@ export default {
 // For non-Tailwind brand assets (optional)
 export const brandAssets = {
   logo: {
-    src: 'https://example.com/logo.png',
-    alt: 'Company Name',
+    src: "https://example.com/logo.png",
+    alt: "Company Name",
     width: 120,
   },
 };
@@ -259,7 +255,7 @@ export const brandAssets = {
 Import the shared config in every email template:
 
 ```tsx
-import tailwindConfig, { brandAssets } from './tailwind.config';
+import tailwindConfig, { brandAssets } from "./tailwind.config";
 
 <Tailwind config={tailwindConfig}>
   <Body className="bg-gray-100 font-sans">
@@ -268,7 +264,7 @@ import tailwindConfig, { brandAssets } from './tailwind.config';
       <Button className="bg-brand-primary text-white">Action</Button>
     </Container>
   </Body>
-</Tailwind>
+</Tailwind>;
 ```
 
 ### Maintaining Consistency
@@ -286,7 +282,9 @@ Direct users to place brand assets in appropriate locations:
 - **Custom fonts**: Use the `Font` component with a web font URL (Google Fonts, Adobe Fonts, or self-hosted).
 
 **Example prompt for gathering brand info:**
+
 > "Before I create your email template, I need some brand information to ensure consistency. Could you provide:
+>
 > 1. Your primary brand color (hex code, e.g., #007bff)
 > 2. Your logo URL (must be a publicly accessible PNG or JPEG)
 > 3. Any secondary colors you'd like to use
@@ -299,4 +297,3 @@ Direct users to place brand assets in appropriate locations:
 3. **Keep file size under 102KB** - Gmail clips larger emails
 4. **Use keywords strategically** - Increase engagement in email body
 5. **Inline styles as fallback** - Some clients strip `<style>` tags
-

@@ -6,7 +6,11 @@
   "scripts": {
     "build": "email build",
     "dev": "email dev",
-    "export": "email export"
+    "export": "email export",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint"
   },
   "dependencies": {
     "@react-email/components": "1.0.8",
@@ -17,6 +21,8 @@
     "@react-email/preview-server": "5.2.8",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.1",
+    "oxlint": "^1.50.0",
+    "prettier": "^3.8.1",
     "react-email": "5.2.8",
     "typescript": "^5.9.3"
   }
