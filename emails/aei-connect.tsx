@@ -110,7 +110,10 @@ const ArticleGrid = ({
       );
 
       return (
-        <Section key={i} className={`border-none border-l-2 border-solid ${borderColor}${i > 0 ? " mt-5" : ""}`}>
+        <Section
+          key={i}
+          className={`border-none border-l-[3px] border-solid ${borderColor}${i > 0 ? " mt-5" : ""}`}
+        >
           <Row>
             {textFirst ? (
               <>
@@ -130,6 +133,30 @@ const ArticleGrid = ({
   </Section>
 );
 
+/** Bulleted news list section */
+const NewsSection = ({ heading, items }: { heading: string; items: NewsItem[] }) => (
+  <Section className="px-5 py-5">
+    <SectionHeading>{heading}</SectionHeading>
+
+    {items.map((item, i) => (
+      <Row key={i} className={i < items.length - 1 ? "mb-2" : ""}>
+        <Column className="w-[12px] align-top pr-1">
+          <Text className="text-p text-aei-black m-0">•</Text>
+        </Column>
+        <Column className="align-top">
+          <Text className="text-p text-aei-black m-0">
+            {item.textBefore}
+            <Link href={item.linkUrl} className="text-aei-red underline">
+              {item.linkText}
+            </Link>
+            {item.textAfter}
+          </Text>
+        </Column>
+      </Row>
+    ))}
+  </Section>
+);
+
 /** Reusable full-width feature section with image, heading, description, and CTA */
 const FeatureSection = ({
   sectionHeading,
@@ -143,7 +170,7 @@ const FeatureSection = ({
   <Section className="px-5 py-5">
     <SectionHeading>{sectionHeading}</SectionHeading>
 
-    <Section className={`border-none border-l-2 border-solid ${borderColor}`}>
+    <Section className={`border-none border-l-[3px] border-solid ${borderColor}`}>
       <Img src={feature.imageUrl} alt={feature.imageAlt} width="568" className="w-full" />
     </Section>
 
@@ -165,7 +192,11 @@ const FeatureSection = ({
         {feature.ctaText}
       </Button>
     ) : (
-      <Link href={feature.ctaUrl} className="text-p-small text-aei-red" style={{ textDecoration: "none" }}>
+      <Link
+        href={feature.ctaUrl}
+        className="text-p-small text-aei-red"
+        style={{ textDecoration: "none" }}
+      >
         {feature.ctaText}
       </Link>
     )}
@@ -196,7 +227,6 @@ interface Feature {
   imageUrl: string;
   imageAlt: string;
 }
-
 
 interface NewsItem {
   textBefore: string;
@@ -258,218 +288,298 @@ export const AEIConnect = ({
     /* ----------------------------------------------------------------
         Welcoming New Talent
     ----------------------------------------------------------------- */
-    <ArticleGrid key="newhire" heading={newHireSectionHeading} articles={newHires} borderColor="border-l-aei-green" />,
+    <ArticleGrid
+      key="newhire"
+      heading={newHireSectionHeading}
+      articles={newHires}
+      borderColor="border-l-aei-green"
+    />,
 
     /* ----------------------------------------------------------------
         Recognition & Rankings
     ----------------------------------------------------------------- */
-    <FeatureSection key="recognition" sectionHeading="Recognition &amp; Rankings" feature={recognition} borderColor="border-l-aei-yellow" />,
+    <FeatureSection
+      key="recognition"
+      sectionHeading="Recognition &amp; Rankings"
+      feature={recognition}
+      borderColor="border-l-aei-yellow"
+    />,
 
     /* ----------------------------------------------------------------
         Join Our Team
     ----------------------------------------------------------------- */
-    <ArticleGrid key="careers" heading="Join Our Team" articles={careersArticles} borderColor="border-l-aei-teal" startWith="image" />,
+    <ArticleGrid
+      key="careers"
+      heading="Join Our Team"
+      articles={careersArticles}
+      borderColor="border-l-aei-teal"
+      startWith="image"
+    />,
 
     /* ----------------------------------------------------------------
         In the News
     ----------------------------------------------------------------- */
-    <Section key="news" className="px-5 py-5">
-      <SectionHeading>In the News:</SectionHeading>
-
-      {newsItems.map((item, i) => (
-        <Row key={i} className={i < newsItems.length - 1 ? "mb-2" : ""}>
-          <Column className="w-[12px] align-top pr-1">
-            <Text className="text-p text-aei-black m-0">•</Text>
-          </Column>
-          <Column className="align-top">
-            <Text className="text-p text-aei-black m-0">
-              {item.textBefore}
-              <Link href={item.linkUrl} className="text-aei-red underline">
-                {item.linkText}
-              </Link>
-              {item.textAfter}
-            </Text>
-          </Column>
-        </Row>
-      ))}
-    </Section>,
+    <NewsSection key="news" heading="In the News:" items={newsItems} />,
   ];
 
   return (
     <Html lang="en">
       <Tailwind config={tailwindConfig}>
-        <Head />
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <meta
+            name="format-detection"
+            content="telephone=no, date=no, address=no, email=no, url=no"
+          />
+          <style>{`
+            html, body {
+              margin: 0 !important;
+              padding: 0 !important;
+              width: 100% !important;
+              min-width: 100% !important;
+              -webkit-text-size-adjust: 100% !important;
+              -ms-text-size-adjust: 100% !important;
+            }
+          `}</style>
+        </Head>
         <Preview>{previewText}</Preview>
-        <Body className="bg-aei-bg font-sans m-0 p-7">
-          <Container className="mx-auto max-w-[600px] bg-white">
-            {/* ----------------------------------------------------------------
+        <Body className="bg-aei-bg font-sans" style={{ margin: "0", padding: "0" }}>
+          <table
+            role="presentation"
+            width="100%"
+            cellPadding={0}
+            cellSpacing={0}
+            style={{ margin: 0, padding: 0, borderCollapse: "collapse" }}
+          >
+            <tr>
+              <td align="center" style={{ padding: "28px" }}>
+                <Container className="bg-white" style={{ width: "100%", maxWidth: "600px" }}>
+                  {/* ----------------------------------------------------------------
               Header — AEI logo
           ----------------------------------------------------------------- */}
-            <Section className="px-5 pt-5 pb-3">
-              <Row>
-                <Column className="w-full text-right">
-                  <Link href="https://aeieng.com">
-                    <Img
-                      src="/static/aei-logo.png"
-                      alt="Affiliated Engineers, Inc."
-                      width="125"
-                      height="28"
-                      className="inline-block"
-                    />
-                  </Link>
-                </Column>
-              </Row>
-            </Section>
+                  <Section className="px-5 pt-5 pb-3">
+                    <Row>
+                      <Column className="w-full text-right">
+                        <Link href="https://aeieng.com">
+                          <Img
+                            src="https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/aei-logo.png"
+                            alt="Affiliated Engineers, Inc."
+                            width="125"
+                            height="28"
+                            className="inline-block"
+                          />
+                        </Link>
+                      </Column>
+                    </Row>
+                  </Section>
 
-            {/* ----------------------------------------------------------------
+                  {/* ----------------------------------------------------------------
               Intro — hero image with chevron cutout + intro text
           ----------------------------------------------------------------- */}
-            <Section>
-              <Row>
-                <td
-                  style={{
-                    background: `url(${heroImageUrl}) no-repeat center center / cover`,
-                    height: "220px",
-                  }}
-                >
-                  <span
-                    dangerouslySetInnerHTML={{
-                      __html: `<!--[if mso]><v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;"><v:fill type="frame" src="${heroImageUrl}" /><v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0"><![endif]-->`,
-                    }}
-                  />
-                  <table
-                    role="presentation"
-                    width="100%"
-                    cellPadding={0}
-                    cellSpacing={0}
-                    style={{ borderCollapse: "collapse" }}
-                  >
-                    <tr>
-                      {/* Left spacer */}
-                      <td style={{ width: "20px" }} />
-                      {/* Heading with red left border */}
+                  <Section>
+                    <Row>
                       <td
                         style={{
-                          paddingTop: "24px",
-                          paddingBottom: "24px",
-                          verticalAlign: "middle",
+                          background: `url(${heroImageUrl}) no-repeat center center / cover`,
+                          height: "220px",
                         }}
                       >
-                        <Heading
-                          as="h1"
-                          className="text-h1 text-white m-0 border-0 border-l-4 border-solid border-l-aei-red pl-2"
-                        >
-                          {issueTitle}
-                        </Heading>
-                      </td>
-                      {/* White chevron triangles */}
-                      <td style={{ width: "80px", verticalAlign: "top", padding: "0" }}>
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: `<!--[if mso]><v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;"><v:fill type="frame" src="${heroImageUrl}" /><v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0"><![endif]-->`,
+                          }}
+                        />
                         <table
                           role="presentation"
+                          width="100%"
                           cellPadding={0}
                           cellSpacing={0}
-                          width={80}
                           style={{ borderCollapse: "collapse" }}
                         >
                           <tr>
-                            <td style={{ fontSize: "0", lineHeight: "0" }}>
-                              <div
-                                style={{
-                                  width: "0",
-                                  height: "0",
-                                  borderRight: "110px solid #F6F7F5",
-                                  borderBottom: "110px solid transparent",
-                                }}
-                              />
+                            {/* Left spacer */}
+                            <td style={{ width: "20px" }} />
+                            {/* Heading with red left border */}
+                            <td
+                              style={{
+                                paddingTop: "24px",
+                                paddingBottom: "24px",
+                                verticalAlign: "middle",
+                              }}
+                            >
+                              <Heading
+                                as="h1"
+                                className="text-h1 text-white m-0 border-0 border-l-4 border-solid border-l-aei-red pl-2"
+                              >
+                                {issueTitle}
+                              </Heading>
                             </td>
-                          </tr>
-                          <tr>
-                            <td style={{ fontSize: "0", lineHeight: "0" }}>
-                              <div
-                                style={{
-                                  width: "0",
-                                  height: "0",
-                                  borderRight: "110px solid #F14326",
-                                  borderTop: "110px solid transparent",
-                                }}
-                              />
+                            {/* White chevron triangles */}
+                            <td style={{ width: "80px", verticalAlign: "top", padding: "0" }}>
+                              <table
+                                role="presentation"
+                                cellPadding={0}
+                                cellSpacing={0}
+                                width={80}
+                                style={{ borderCollapse: "collapse" }}
+                              >
+                                <tr>
+                                  <td style={{ fontSize: "0", lineHeight: "0" }}>
+                                    <div
+                                      style={{
+                                        width: "0",
+                                        height: "0",
+                                        borderRight: "110px solid #F6F7F5",
+                                        borderBottom: "110px solid transparent",
+                                      }}
+                                    />
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style={{ fontSize: "0", lineHeight: "0" }}>
+                                    <div
+                                      style={{
+                                        width: "0",
+                                        height: "0",
+                                        borderRight: "110px solid #F14326",
+                                        borderTop: "110px solid transparent",
+                                      }}
+                                    />
+                                  </td>
+                                </tr>
+                              </table>
                             </td>
                           </tr>
                         </table>
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: `<!--[if mso]></v:textbox></v:rect><![endif]-->`,
+                          }}
+                        />
                       </td>
-                    </tr>
-                  </table>
-                  <span
-                    dangerouslySetInnerHTML={{
-                      __html: `<!--[if mso]></v:textbox></v:rect><![endif]-->`,
-                    }}
-                  />
-                </td>
-              </Row>
-            </Section>
-            <Section className="bg-aei-light-warm p-5">
-              <Text className="text-h3 text-aei-black m-0">{introText}</Text>
-            </Section>
+                    </Row>
+                  </Section>
+                  <Section className="bg-aei-light-warm p-5">
+                    <Text className="text-h3 text-aei-black m-0">{introText}</Text>
+                  </Section>
 
-            {/* ----------------------------------------------------------------
+                  {/* ----------------------------------------------------------------
               Content sections with auto bottom borders
           ----------------------------------------------------------------- */}
-            {contentSections.map((section, i) => (
-              <React.Fragment key={section.key}>
-                {section}
-                {i < contentSections.length - 1 && (
-                  <Section className="px-5 border-none border-b border-solid border-b-aei-bg" />
-                )}
-              </React.Fragment>
-            ))}
+                  {contentSections.map((section, i) => (
+                    <React.Fragment key={section.key}>
+                      {section}
+                      {i < contentSections.length - 1 && (
+                        <Section className="px-5 border-none border-b border-solid border-b-aei-bg" />
+                      )}
+                    </React.Fragment>
+                  ))}
 
-            {/* ----------------------------------------------------------------
+                  {/* ----------------------------------------------------------------
               Footer
           ----------------------------------------------------------------- */}
-            <Section className="bg-aei-light-warm">
-              <Row>
-                {/* Red triangle in bottom-left corner */}
-                <td style={{ width: "110px", verticalAlign: "bottom", padding: "0" }}>
-                  <div
-                    style={{
-                      width: "0",
-                      height: "0",
-                      borderLeft: "110px solid #F14326",
-                      borderTop: "110px solid transparent",
-                    }}
-                  />
-                </td>
-                {/* Footer content */}
-                <td className="pt-10 pb-8 text-center">
-                  <Text className="text-p-small text-aei-black m-0 mb-5">{footerAddress}</Text>
-                  <Text className="text-p-small text-aei-black m-0 mb-7">
-                    <Link href={unsubscribeUrl} className="text-aei-black underline">
-                      Unsubscribe
-                    </Link>
-                    {"   "}
-                    <Link href={updateProfileUrl} className="text-aei-black underline">
-                      Update Profile
-                    </Link>
-                    {"   "}
-                    <Link href={dataNoticeUrl} className="text-aei-black underline">
-                      Constant Contact Data Notice
-                    </Link>
-                  </Text>
-                  <Link href="https://www.constantcontact.com">
-                    <Img
-                      src="/static/constant-contact-logo.png"
-                      alt="Constant Contact"
-                      width="110"
-                      height="32"
-                      className="inline-block"
+                  <Section className="bg-aei-light-warm" style={{ position: "relative" }}>
+                    <Row>
+                      <td className="pt-9 pb-8 px-8 text-center">
+                        <Text
+                          className="text-p-small text-aei-black m-0 mb-3"
+                          style={{ lineHeight: "1.6" }}
+                        >
+                          <Link
+                            href="#"
+                            className="text-aei-black no-underline"
+                            style={{ color: "#282D28", textDecoration: "none", cursor: "default" }}
+                          >
+                            {footerAddress}
+                          </Link>
+                        </Text>
+                        <Text
+                          className="text-p-small text-aei-black m-0 mb-6"
+                          style={{ lineHeight: "1.4" }}
+                        >
+                          <Link
+                            href={unsubscribeUrl}
+                            className="text-aei-black underline"
+                            style={{
+                              color: "#282D28",
+                              display: "inline-block",
+                              padding: "4px 4px",
+                            }}
+                          >
+                            Unsubscribe
+                          </Link>
+                          <Link
+                            href={updateProfileUrl}
+                            className="text-aei-black underline"
+                            style={{
+                              color: "#282D28",
+                              display: "inline-block",
+                              padding: "4px 4px",
+                            }}
+                          >
+                            Update Profile
+                          </Link>
+                          <Link
+                            href={dataNoticeUrl}
+                            className="text-aei-black underline"
+                            style={{
+                              color: "#282D28",
+                              display: "inline-block",
+                              padding: "4px 4px",
+                            }}
+                          >
+                            Constant Contact Data Notice
+                          </Link>
+                        </Text>
+                        <Link href="https://www.constantcontact.com">
+                          <Img
+                            src="https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/constant-contact-logo.png"
+                            alt="Constant Contact"
+                            width="110"
+                            height="32"
+                            className="inline-block"
+                          />
+                        </Link>
+                      </td>
+                    </Row>
+                    {/* Red triangle in bottom-left corner */}
+                    {/* VML version for Outlook */}
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: `<!--[if mso]>
+<v:shape xmlns:v="urn:schemas-microsoft-com:vml" coordsize="110,110" path="m 0,110 l 110,110 0,0 x e" style="position:absolute;bottom:0;left:0;width:110px;height:110px;" fillcolor="#F14326" stroked="false">
+  <v:fill type="solid" color="#F14326" />
+</v:shape>
+<![endif]-->`,
+                      }}
                     />
-                  </Link>
-                </td>
-                {/* Spacer for centering symmetry */}
-                <td style={{ width: "110px" }} />
-              </Row>
-            </Section>
-          </Container>
+                    {/* CSS version for modern clients */}
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: `<!--[if !mso]><!-->`,
+                      }}
+                    />
+                    <div
+                      style={{
+                        position: "absolute",
+                        bottom: "0",
+                        left: "0",
+                        width: "0",
+                        height: "0",
+                        borderLeft: "110px solid #F14326",
+                        borderTop: "110px solid transparent",
+                      }}
+                    />
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: `<!--<![endif]-->`,
+                      }}
+                    />
+                  </Section>
+                </Container>
+              </td>
+            </tr>
+          </table>
         </Body>
       </Tailwind>
     </Html>
@@ -483,7 +593,8 @@ export const AEIConnect = ({
 AEIConnect.PreviewProps = {
   previewText: "AEI Connect — insights, innovations, and news from across our teams.",
   issueTitle: "AEI Connect",
-  heroImageUrl: "/static/innovation.png",
+  heroImageUrl:
+    "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/innovation.png",
   introText:
     "Welcome to this month\u2019s edition of AEI Connect\u2014a curated roundup of insights, innovations, and news from across our teams. Explore what\u2019s new, what\u2019s next, and how we\u2019re designing smarter together.",
 
@@ -494,13 +605,15 @@ AEIConnect.PreviewProps = {
         "In an interview with Buildings Magazine, Principal George Howe discusses the advantages of district energy systems and strategies for their deployment\u2026",
       readMoreUrl: "https://aeieng.com",
       readMoreText: "Read More \u2192",
-      imageUrl: "/static/fresh-perspectives.png",
+      imageUrl:
+        "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/fresh-perspectives.png",
       imageAlt: "Fresh perspectives from our experts",
     },
     {
       description:
         "In a CSE article, Senior Project Engineer Sam Buscemi examines how cooling infrastructure and power requirements for [AI data centers](https://aeieng.com) are reshaping the use of backup power systems. Sudden power interruptions of cooling failures can push GPU hardware\u2026",
-      imageUrl: "/static/ai-data-center.png",
+      imageUrl:
+        "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/ai-data-center.png",
       imageAlt: "AI data center infrastructure",
     },
   ],
@@ -513,7 +626,8 @@ AEIConnect.PreviewProps = {
     ctaText: "Explore more \u2192",
     ctaUrl: "https://aeieng.com",
     ctaStyle: "button",
-    imageUrl: "/static/innovation.png",
+    imageUrl:
+      "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/innovation.png",
     imageAlt: "Genentech B86 Laboratory interior showing collaborative workspace",
   },
 
@@ -523,7 +637,8 @@ AEIConnect.PreviewProps = {
       heading: "Meet Our Newest Director of BD",
       description:
         "We are excited to introduce [Ashley Hatley](https://aeieng.com), who will lead strategic client engagement and market growth initiatives across the firm\u2019s core markets in Phoenix, AZ.",
-      imageUrl: "/static/ashley.png",
+      imageUrl:
+        "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/ashley.png",
       imageAlt: "Ashley Hatley",
     },
   ],
@@ -535,7 +650,8 @@ AEIConnect.PreviewProps = {
     ctaText: "See more \u2192",
     ctaUrl: "https://aeieng.com",
     ctaStyle: "link",
-    imageUrl: "/static/recognition.png",
+    imageUrl:
+      "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/recognition.png",
     imageAlt: "AEI team members at industry event",
   },
 
@@ -544,7 +660,8 @@ AEIConnect.PreviewProps = {
       heading: "We\u2019re Hiring!",
       description:
         "Be a part of our growing team. At AEI, you\u2019ll join a collaborative community where your expertise fuels innovation, your ideas drive progress, and your work helps shape a brighter future. [Explore current opportunities across diverse disciplines.](https://aeieng.com)",
-      imageUrl: "/static/team.png",
+      imageUrl:
+        "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/team.png",
       imageAlt: "AEI team members collaborating",
     },
   ],

@@ -21,8 +21,8 @@ export default {
         h1: ["32px", { lineHeight: "1", fontWeight: "700" }],
         h2: ["14px", { lineHeight: "1", fontWeight: "700" }],
         h3: ["12px", { lineHeight: "1.2", fontWeight: "400" }],
-        p: ["10px", { lineHeight: "1.2", fontWeight: "400" }],
-        "p-small": ["9px", { lineHeight: "1.2", fontWeight: "400" }],
+        p: ["11px", { lineHeight: "1.2", fontWeight: "400" }],
+        "p-small": ["10px", { lineHeight: "1.2", fontWeight: "400" }],
       },
       fontFamily: {
         sans: ["Arial", "Helvetica Neue", "Helvetica", "sans-serif"],
