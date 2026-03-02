@@ -77,7 +77,7 @@ const ArticleGrid = ({
             {parseLinks(article.description, "text-aei-red underline")}
           </Text>
           {article.readMoreUrl && (
-            <Link href={article.readMoreUrl} className="text-p-small text-aei-red no-underline">
+            <Link href={article.readMoreUrl} className="text-p text-aei-red no-underline">
               {article.readMoreText ?? "Read More →"}
             </Link>
           )}
@@ -187,14 +187,14 @@ const FeatureSection = ({
     {feature.ctaStyle === "button" ? (
       <Button
         href={feature.ctaUrl}
-        className="bg-aei-red text-white text-p-small mt-3 py-2.5 px-5 no-underline"
+        className="bg-aei-red text-white text-p mt-3 py-2.5 px-5 no-underline"
       >
         {feature.ctaText}
       </Button>
     ) : (
       <Link
         href={feature.ctaUrl}
-        className="text-p-small text-aei-red"
+        className="text-p text-aei-red"
         style={{ textDecoration: "none" }}
       >
         {feature.ctaText}
@@ -258,22 +258,22 @@ interface AEIConnectProps {
 // ---------------------------------------------------------------------------
 
 export const AEIConnect = ({
-  previewText,
-  issueTitle,
-  heroImageUrl,
-  introText,
-  mediaArticles,
-  spotlight,
-  newHireSectionHeading,
-  newHires,
-  recognition,
-  careersArticles,
-  newsItems,
-  footerAddress,
-  unsubscribeUrl,
-  updateProfileUrl,
-  dataNoticeUrl,
-}: AEIConnectProps) => {
+  previewText = defaultProps.previewText,
+  issueTitle = defaultProps.issueTitle,
+  heroImageUrl = defaultProps.heroImageUrl,
+  introText = defaultProps.introText,
+  mediaArticles = defaultProps.mediaArticles,
+  spotlight = defaultProps.spotlight,
+  newHireSectionHeading = defaultProps.newHireSectionHeading,
+  newHires = defaultProps.newHires,
+  recognition = defaultProps.recognition,
+  careersArticles = defaultProps.careersArticles,
+  newsItems = defaultProps.newsItems,
+  footerAddress = defaultProps.footerAddress,
+  unsubscribeUrl = defaultProps.unsubscribeUrl,
+  updateProfileUrl = defaultProps.updateProfileUrl,
+  dataNoticeUrl = defaultProps.dataNoticeUrl,
+}: Partial<AEIConnectProps> = {}) => {
   const contentSections = [
     /* ----------------------------------------------------------------
         In the Media
@@ -339,6 +339,13 @@ export const AEIConnect = ({
               min-width: 100% !important;
               -webkit-text-size-adjust: 100% !important;
               -ms-text-size-adjust: 100% !important;
+            }
+            @media screen and (min-width: 600px) {
+              h1 { font-size: 42px !important; }
+              h2 { font-size: 17px !important; }
+              h3 { font-size: 14px !important; }
+              p, a { font-size: 13px !important; }
+              .footer p, .footer a { font-size: 12px !important; }
             }
           `}</style>
         </Head>
@@ -460,7 +467,7 @@ export const AEIConnect = ({
                     </Row>
                   </Section>
                   <Section className="bg-aei-light-warm p-5">
-                    <Text className="text-h3 text-aei-black m-0">{introText}</Text>
+                    <Heading as="h3" className="text-h3 text-aei-black m-0">{introText}</Heading>
                   </Section>
 
                   {/* ----------------------------------------------------------------
@@ -478,7 +485,7 @@ export const AEIConnect = ({
                   {/* ----------------------------------------------------------------
               Footer
           ----------------------------------------------------------------- */}
-                  <Section className="bg-aei-light-warm" style={{ position: "relative" }}>
+                  <Section className="footer bg-aei-light-warm" style={{ position: "relative" }}>
                     <Row>
                       <td className="pt-9 pb-8 px-8 text-center">
                         <Text
@@ -587,10 +594,10 @@ export const AEIConnect = ({
 };
 
 // ---------------------------------------------------------------------------
-// Preview props — matches the design comp content
+// Default / preview props — matches the design comp content
 // ---------------------------------------------------------------------------
 
-AEIConnect.PreviewProps = {
+const defaultProps: AEIConnectProps = {
   previewText: "AEI Connect — insights, innovations, and news from across our teams.",
   issueTitle: "AEI Connect",
   heroImageUrl:
@@ -695,6 +702,8 @@ AEIConnect.PreviewProps = {
   unsubscribeUrl: "https://aeieng.com",
   updateProfileUrl: "https://aeieng.com",
   dataNoticeUrl: "https://aeieng.com",
-} satisfies AEIConnectProps;
+};
+
+AEIConnect.PreviewProps = defaultProps;
 
 export default AEIConnect;
