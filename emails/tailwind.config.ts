@@ -8,14 +8,13 @@ export default {
         aei: {
           red: "#F14326",
           black: "#282D28",
-          body: "#444444",
-          muted: "#666666",
-          border: "#DDDDDD",
-          light: "#F2F2F2",
           bg: "#D4D4C4",
           "light-warm": "#F6F7F5",
           purple: "#8177A5",
           green: "#86C54C",
+          teal: "#4FC0B8",
+          blue: "#549DC0",
+          yellow: "#FFCD4D",
         },
       },
       fontSize: {

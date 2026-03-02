@@ -50,27 +50,30 @@ const ArticleGrid = ({
   heading,
   articles,
   borderColor = "border-l-aei-purple",
+  startWith = "text",
 }: {
   heading: string;
   articles: Article[];
   borderColor?: string;
+  /** Which column appears first in the first row. Subsequent rows alternate. */
+  startWith?: "text" | "image";
 }) => (
   <Section className="px-5 py-5">
     <SectionHeading>{heading}</SectionHeading>
 
     {articles.map((article, i) => {
-      const isEven = i % 2 === 0;
+      const textFirst = startWith === "text" ? i % 2 === 0 : i % 2 !== 0;
       const textCol = (
         <Column
           key="text"
-          className={`w-1/2 align-top p-2.5${isEven ? " bg-aei-light-warm" : ""}`}
+          className={`w-1/2 align-top p-2.5${textFirst ? " bg-aei-light-warm" : ""}`}
         >
           {article.heading && (
             <Heading as="h3" className="text-h3 text-aei-black mt-0 mb-2">
               {article.heading}
             </Heading>
           )}
-          <Text className="text-p text-aei-black m-0 mb-2">
+          <Text className="text-p text-aei-black my-0">
             {parseLinks(article.description, "text-aei-red underline")}
           </Text>
           {article.readMoreUrl && (
@@ -86,10 +89,7 @@ const ArticleGrid = ({
           style={{
             width: "50%",
             verticalAlign: "top",
-            backgroundImage: `url(${article.imageUrl})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
+            background: `url(${article.imageUrl}) no-repeat center center / cover`,
             minHeight: "120px",
           }}
           dangerouslySetInnerHTML={{
@@ -112,7 +112,7 @@ const ArticleGrid = ({
       return (
         <Section key={i} className={`border-none border-l-2 border-solid ${borderColor}${i > 0 ? " mt-5" : ""}`}>
           <Row>
-            {isEven ? (
+            {textFirst ? (
               <>
                 {textCol}
                 {imageCol}
@@ -134,16 +134,20 @@ const ArticleGrid = ({
 const FeatureSection = ({
   sectionHeading,
   feature,
+  borderColor = "border-l-aei-blue",
 }: {
   sectionHeading: string;
   feature: Feature;
+  borderColor?: string;
 }) => (
   <Section className="px-5 py-5">
     <SectionHeading>{sectionHeading}</SectionHeading>
 
-    <Img src={feature.imageUrl} alt={feature.imageAlt} width="568" className="w-full mb-4" />
+    <Section className={`border-none border-l-2 border-solid ${borderColor}`}>
+      <Img src={feature.imageUrl} alt={feature.imageAlt} width="568" className="w-full" />
+    </Section>
 
-    <Heading as="h3" className="text-h3 text-aei-black mt-0 mb-2">
+    <Heading as="h3" className="text-h3 text-aei-black my-3">
       {feature.label && (
         <>
           {feature.label}
@@ -152,16 +156,16 @@ const FeatureSection = ({
       )}
       {feature.title}
     </Heading>
-    <Text className="text-p text-aei-black m-0 mb-4">{feature.description}</Text>
+    <Text className="text-p text-aei-black my-0">{feature.description}</Text>
     {feature.ctaStyle === "button" ? (
       <Button
         href={feature.ctaUrl}
-        className="bg-aei-red text-white text-p-small py-2.5 px-5 no-underline box-border"
+        className="bg-aei-red text-white text-p-small mt-3 py-2.5 px-5 no-underline"
       >
         {feature.ctaText}
       </Button>
     ) : (
-      <Link href={feature.ctaUrl} className="text-p-small text-aei-red no-underline">
+      <Link href={feature.ctaUrl} className="text-p-small text-aei-red" style={{ textDecoration: "none" }}>
         {feature.ctaText}
       </Link>
     )}
@@ -193,14 +197,6 @@ interface Feature {
   imageAlt: string;
 }
 
-interface Careers {
-  heading: string;
-  description: string;
-  linkText: string;
-  linkUrl: string;
-  imageUrl: string;
-  imageAlt: string;
-}
 
 interface NewsItem {
   textBefore: string;
@@ -212,13 +208,14 @@ interface NewsItem {
 interface AEIConnectProps {
   previewText: string;
   issueTitle: string;
+  heroImageUrl: string;
   introText: string;
   mediaArticles: Article[];
   spotlight: Feature;
   newHireSectionHeading: string;
   newHires: Article[];
   recognition: Feature;
-  careers: Careers;
+  careersArticles: Article[];
   newsItems: NewsItem[];
   footerAddress: string;
   unsubscribeUrl: string;
@@ -233,13 +230,14 @@ interface AEIConnectProps {
 export const AEIConnect = ({
   previewText,
   issueTitle,
+  heroImageUrl,
   introText,
   mediaArticles,
   spotlight,
   newHireSectionHeading,
   newHires,
   recognition,
-  careers,
+  careersArticles,
   newsItems,
   footerAddress,
   unsubscribeUrl,
@@ -265,31 +263,12 @@ export const AEIConnect = ({
     /* ----------------------------------------------------------------
         Recognition & Rankings
     ----------------------------------------------------------------- */
-    <FeatureSection key="recognition" sectionHeading="Recognition &amp; Rankings" feature={recognition} />,
+    <FeatureSection key="recognition" sectionHeading="Recognition &amp; Rankings" feature={recognition} borderColor="border-l-aei-yellow" />,
 
     /* ----------------------------------------------------------------
         Join Our Team
     ----------------------------------------------------------------- */
-    <Section key="careers" className="px-5 py-5">
-      <SectionHeading>Join Our Team</SectionHeading>
-
-      <Row>
-        <Column className="w-1/2 align-top pr-3">
-          <Img src={careers.imageUrl} alt={careers.imageAlt} width="270" className="w-full" />
-        </Column>
-        <Column className="w-1/2 align-top pl-3">
-          <Heading as="h3" className="text-h3 text-aei-red mt-0 mb-2">
-            {careers.heading}
-          </Heading>
-          <Text className="text-p text-aei-black m-0">
-            {careers.description}{" "}
-            <Link href={careers.linkUrl} className="text-aei-red underline">
-              {careers.linkText}
-            </Link>
-          </Text>
-        </Column>
-      </Row>
-    </Section>,
+    <ArticleGrid key="careers" heading="Join Our Team" articles={careersArticles} borderColor="border-l-aei-teal" startWith="image" />,
 
     /* ----------------------------------------------------------------
         In the News
@@ -298,8 +277,8 @@ export const AEIConnect = ({
       <SectionHeading>In the News:</SectionHeading>
 
       {newsItems.map((item, i) => (
-        <Row key={i} className="mb-3">
-          <Column className="w-[12px] align-top pr-2">
+        <Row key={i} className={i < newsItems.length - 1 ? "mb-2" : ""}>
+          <Column className="w-[12px] align-top pr-1">
             <Text className="text-p text-aei-black m-0">•</Text>
           </Column>
           <Column className="align-top">
@@ -343,21 +322,91 @@ export const AEIConnect = ({
             </Section>
 
             {/* ----------------------------------------------------------------
-              Hero — "AEI Connect" with red left border
+              Intro — hero image with chevron cutout + intro text
           ----------------------------------------------------------------- */}
-            <Section className="px-5 pb-6">
-              <Section className="bg-aei-light py-6 px-5">
-                <Section className="border-none border-l-4 border-solid border-l-aei-red pl-4">
-                  <Heading as="h1" className="text-h1 text-aei-black m-0">
-                    {issueTitle}
-                  </Heading>
-                </Section>
-              </Section>
+            <Section>
+              <Row>
+                <td
+                  style={{
+                    background: `url(${heroImageUrl}) no-repeat center center / cover`,
+                    height: "220px",
+                  }}
+                >
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: `<!--[if mso]><v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;"><v:fill type="frame" src="${heroImageUrl}" /><v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0"><![endif]-->`,
+                    }}
+                  />
+                  <table
+                    role="presentation"
+                    width="100%"
+                    cellPadding={0}
+                    cellSpacing={0}
+                    style={{ borderCollapse: "collapse" }}
+                  >
+                    <tr>
+                      {/* Left spacer */}
+                      <td style={{ width: "20px" }} />
+                      {/* Heading with red left border */}
+                      <td
+                        style={{
+                          paddingTop: "24px",
+                          paddingBottom: "24px",
+                          verticalAlign: "middle",
+                        }}
+                      >
+                        <Heading
+                          as="h1"
+                          className="text-h1 text-white m-0 border-0 border-l-4 border-solid border-l-aei-red pl-2"
+                        >
+                          {issueTitle}
+                        </Heading>
+                      </td>
+                      {/* White chevron triangles */}
+                      <td style={{ width: "80px", verticalAlign: "top", padding: "0" }}>
+                        <table
+                          role="presentation"
+                          cellPadding={0}
+                          cellSpacing={0}
+                          width={80}
+                          style={{ borderCollapse: "collapse" }}
+                        >
+                          <tr>
+                            <td style={{ fontSize: "0", lineHeight: "0" }}>
+                              <div
+                                style={{
+                                  width: "0",
+                                  height: "0",
+                                  borderRight: "110px solid #F6F7F5",
+                                  borderBottom: "110px solid transparent",
+                                }}
+                              />
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ fontSize: "0", lineHeight: "0" }}>
+                              <div
+                                style={{
+                                  width: "0",
+                                  height: "0",
+                                  borderRight: "110px solid #F14326",
+                                  borderTop: "110px solid transparent",
+                                }}
+                              />
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: `<!--[if mso]></v:textbox></v:rect><![endif]-->`,
+                    }}
+                  />
+                </td>
+              </Row>
             </Section>
-
-            {/* ----------------------------------------------------------------
-              Intro text
-          ----------------------------------------------------------------- */}
             <Section className="bg-aei-light-warm p-5">
               <Text className="text-h3 text-aei-black m-0">{introText}</Text>
             </Section>
@@ -377,21 +426,48 @@ export const AEIConnect = ({
             {/* ----------------------------------------------------------------
               Footer
           ----------------------------------------------------------------- */}
-            <Section className="px-5 py-6 text-center">
-              <Text className="text-p-small text-aei-black m-0 mb-3">{footerAddress}</Text>
-              <Text className="text-p-small text-aei-black m-0">
-                <Link href={unsubscribeUrl} className="text-aei-red underline">
-                  Unsubscribe
-                </Link>
-                {"   "}
-                <Link href={updateProfileUrl} className="text-aei-red underline">
-                  Update Profile
-                </Link>
-                {"   "}
-                <Link href={dataNoticeUrl} className="text-aei-red underline">
-                  Constant Contact Data Notice
-                </Link>
-              </Text>
+            <Section className="bg-aei-light-warm">
+              <Row>
+                {/* Red triangle in bottom-left corner */}
+                <td style={{ width: "110px", verticalAlign: "bottom", padding: "0" }}>
+                  <div
+                    style={{
+                      width: "0",
+                      height: "0",
+                      borderLeft: "110px solid #F14326",
+                      borderTop: "110px solid transparent",
+                    }}
+                  />
+                </td>
+                {/* Footer content */}
+                <td className="pt-10 pb-8 text-center">
+                  <Text className="text-p-small text-aei-black m-0 mb-5">{footerAddress}</Text>
+                  <Text className="text-p-small text-aei-black m-0 mb-7">
+                    <Link href={unsubscribeUrl} className="text-aei-black underline">
+                      Unsubscribe
+                    </Link>
+                    {"   "}
+                    <Link href={updateProfileUrl} className="text-aei-black underline">
+                      Update Profile
+                    </Link>
+                    {"   "}
+                    <Link href={dataNoticeUrl} className="text-aei-black underline">
+                      Constant Contact Data Notice
+                    </Link>
+                  </Text>
+                  <Link href="https://www.constantcontact.com">
+                    <Img
+                      src="/static/constant-contact-logo.png"
+                      alt="Constant Contact"
+                      width="110"
+                      height="32"
+                      className="inline-block"
+                    />
+                  </Link>
+                </td>
+                {/* Spacer for centering symmetry */}
+                <td style={{ width: "110px" }} />
+              </Row>
             </Section>
           </Container>
         </Body>
@@ -407,6 +483,7 @@ export const AEIConnect = ({
 AEIConnect.PreviewProps = {
   previewText: "AEI Connect — insights, innovations, and news from across our teams.",
   issueTitle: "AEI Connect",
+  heroImageUrl: "/static/innovation.png",
   introText:
     "Welcome to this month\u2019s edition of AEI Connect\u2014a curated roundup of insights, innovations, and news from across our teams. Explore what\u2019s new, what\u2019s next, and how we\u2019re designing smarter together.",
 
@@ -415,29 +492,14 @@ AEIConnect.PreviewProps = {
       heading: "Fresh Perspectives from Our Experts",
       description:
         "In an interview with Buildings Magazine, Principal George Howe discusses the advantages of district energy systems and strategies for their deployment\u2026",
-      readMoreUrl: "#",
+      readMoreUrl: "https://aeieng.com",
       readMoreText: "Read More \u2192",
       imageUrl: "/static/fresh-perspectives.png",
       imageAlt: "Fresh perspectives from our experts",
     },
     {
       description:
-        "In a CSE article, Senior Project Engineer Sam Buscemi examines how cooling infrastructure and power requirements for [AI data centers](#) are reshaping the use of backup power systems. Sudden power interruptions of cooling failures can push GPU hardware\u2026",
-      imageUrl: "/static/ai-data-center.png",
-      imageAlt: "AI data center infrastructure",
-    },
-    {
-      heading: "Fresh Perspectives from Our Experts",
-      description:
-        "In an interview with Buildings Magazine, Principal George Howe discusses the advantages of district energy systems and strategies for their deployment. These systems offer significant benefits for campus environments, enabling centralized heating and cooling that reduces energy consumption and operational costs across multiple buildings\u2026",
-      readMoreUrl: "#",
-      readMoreText: "Read More \u2192",
-      imageUrl: "/static/fresh-perspectives.png",
-      imageAlt: "Fresh perspectives from our experts",
-    },
-    {
-      description:
-        "examines how cooling infrastructure and power requirements for [AI data centers](#) are reshaping the use of backup power systems. Sudden power interruptions of cooling failures can push GPU hardware. As demand for AI workloads continues to grow, engineers must rethink traditional approaches to redundancy and thermal management in these critical facilities\u2026",
+        "In a CSE article, Senior Project Engineer Sam Buscemi examines how cooling infrastructure and power requirements for [AI data centers](https://aeieng.com) are reshaping the use of backup power systems. Sudden power interruptions of cooling failures can push GPU hardware\u2026",
       imageUrl: "/static/ai-data-center.png",
       imageAlt: "AI data center infrastructure",
     },
@@ -449,7 +511,7 @@ AEIConnect.PreviewProps = {
     description:
       "This versatile, all-electric laboratory inspires innovation and collaboration while embracing sustainability. AEI\u2019s mechanical, electrical, and plumbing (MEP) and low-voltage engineering services were key to developing infrastructure to support advanced research and development models and promote collaboration among scientists.",
     ctaText: "Explore more \u2192",
-    ctaUrl: "#",
+    ctaUrl: "https://aeieng.com",
     ctaStyle: "button",
     imageUrl: "/static/innovation.png",
     imageAlt: "Genentech B86 Laboratory interior showing collaborative workspace",
@@ -460,7 +522,7 @@ AEIConnect.PreviewProps = {
     {
       heading: "Meet Our Newest Director of BD",
       description:
-        "We are excited to introduce [Ashley Hatley](#), who will lead strategic client engagement and market growth initiatives across the firm\u2019s core markets in Phoenix, AZ.",
+        "We are excited to introduce [Ashley Hatley](https://aeieng.com), who will lead strategic client engagement and market growth initiatives across the firm\u2019s core markets in Phoenix, AZ.",
       imageUrl: "/static/ashley.png",
       imageAlt: "Ashley Hatley",
     },
@@ -471,51 +533,51 @@ AEIConnect.PreviewProps = {
     description:
       "AEI ranks among the nation\u2019s top Engineering firms in BD+C\u2019s 2025 Giants 400 Report. For the third consecutive year, we are ranked in the Top 2 Science & Technology Laboratory firms, following our #1 ranking in 2024.",
     ctaText: "See more \u2192",
-    ctaUrl: "#",
+    ctaUrl: "https://aeieng.com",
     ctaStyle: "link",
     imageUrl: "/static/recognition.png",
     imageAlt: "AEI team members at industry event",
   },
 
-  careers: {
-    heading: "We\u2019re Hiring!",
-    description:
-      "Be a part of our growing team. At AEI, you\u2019ll join a collaborative community where your expertise fuels innovation, your ideas drive progress, and your work helps shape a brighter future.",
-    linkText: "Explore current opportunities across diverse disciplines.",
-    linkUrl: "#",
-    imageUrl: "/static/team.png",
-    imageAlt: "AEI team members collaborating",
-  },
+  careersArticles: [
+    {
+      heading: "We\u2019re Hiring!",
+      description:
+        "Be a part of our growing team. At AEI, you\u2019ll join a collaborative community where your expertise fuels innovation, your ideas drive progress, and your work helps shape a brighter future. [Explore current opportunities across diverse disciplines.](https://aeieng.com)",
+      imageUrl: "/static/team.png",
+      imageAlt: "AEI team members collaborating",
+    },
+  ],
 
   newsItems: [
     {
       textBefore:
         "Principals Kwongyee Yoong and Sean Lawler discuss MEP design strategies for behavioral health facilities, exploring features that not only promote patient safety and comfort but also enhance facility functionality in ",
       linkText: "Medical Construction & Design",
-      linkUrl: "#",
+      linkUrl: "https://aeieng.com",
       textAfter: ".",
     },
     {
       textBefore:
         "Inspired by Principal Blythe Vogt\u2019s and Project Manager Holly Lattin\u2019s 2025 Lab Design Conference presentation, ",
       linkText: "Lab Design News",
-      linkUrl: "#",
+      linkUrl: "https://aeieng.com",
       textAfter:
         " shares the story behind the University of Arkansas\u2019 Institute for Integrative and Innovative Research (I\u00B2R) design.",
     },
     {
       textBefore: "In ",
       linkText: "Campus Safety",
-      linkUrl: "#",
+      linkUrl: "https://aeieng.com",
       textAfter:
         ", Project Manager Sean Ahrens explores de-escalation as a strategy to defuse conflict and prevent workplace violence in healthcare settings.",
     },
   ],
 
   footerAddress: "Affiliated Engineers, Inc. | 5802 Research Park Blvd. Madison, WI 53719 US",
-  unsubscribeUrl: "#",
-  updateProfileUrl: "#",
-  dataNoticeUrl: "#",
+  unsubscribeUrl: "https://aeieng.com",
+  updateProfileUrl: "https://aeieng.com",
+  dataNoticeUrl: "https://aeieng.com",
 } satisfies AEIConnectProps;
 
 export default AEIConnect;
