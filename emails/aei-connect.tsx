@@ -112,7 +112,13 @@ const ArticleGrid = ({
       return (
         <Section
           key={i}
-          className={`border-none border-l-[3px] border-solid ${borderColor}${i > 0 ? " mt-5" : ""}`}
+          className={i > 0 ? "mt-5" : ""}
+          style={{
+            borderTop: "0",
+            borderRight: "0",
+            borderBottom: "0",
+            borderLeft: `3px solid ${borderColorMap[borderColor]}`,
+          }}
         >
           <Row>
             {textFirst ? (
@@ -166,7 +172,14 @@ const FeatureSection = ({
   <Section className="px-5 py-5">
     <SectionHeading>{sectionHeading}</SectionHeading>
 
-    <Section className={`border-none border-l-[3px] border-solid ${borderColor}`}>
+    <Section
+      style={{
+        borderTop: "0",
+        borderRight: "0",
+        borderBottom: "0",
+        borderLeft: `3px solid ${borderColorMap[borderColor]}`,
+      }}
+    >
       <Img src={feature.imageUrl} alt={feature.imageAlt} width="568" className="w-full" />
     </Section>
 
@@ -236,6 +249,16 @@ export type BorderColor =
   | "border-l-aei-blue"
   | "border-l-aei-yellow"
   | "border-l-aei-red";
+
+/** Maps Tailwind border-color class names to hex values for inline styles (Outlook-safe) */
+const borderColorMap: Record<BorderColor, string> = {
+  "border-l-aei-purple": "#8177A5",
+  "border-l-aei-green": "#86C54C",
+  "border-l-aei-teal": "#4FC0B8",
+  "border-l-aei-blue": "#549DC0",
+  "border-l-aei-yellow": "#FFCD4D",
+  "border-l-aei-red": "#F14326",
+};
 
 export type ContentSection =
   | {
@@ -345,6 +368,11 @@ export const AEIConnect = ({
               .footer p, .footer a { font-size: 12px !important; }
             }
           `}</style>
+          <span
+            dangerouslySetInnerHTML={{
+              __html: `<!--[if mso]><style>table, td { border: none; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }</style><![endif]-->`,
+            }}
+          />
         </Head>
         <Preview>{previewText}</Preview>
         <Body className="bg-aei-bg font-sans" style={{ margin: "0", padding: "0" }}>
@@ -413,7 +441,13 @@ export const AEIConnect = ({
                             >
                               <Heading
                                 as="h1"
-                                className="text-h1 text-white m-0 border-0 border-l-4 border-solid border-l-aei-red pl-2"
+                                className="text-h1 text-white m-0 pl-2"
+                                style={{
+                                  borderTop: "0",
+                                  borderRight: "0",
+                                  borderBottom: "0",
+                                  borderLeft: "4px solid #F14326",
+                                }}
                               >
                                 {issueTitle}
                               </Heading>
@@ -476,7 +510,15 @@ export const AEIConnect = ({
                     <React.Fragment key={section.key}>
                       {section}
                       {i < contentSections.length - 1 && (
-                        <Section className="px-5 border-none border-b border-solid border-b-aei-bg" />
+                        <Section
+                          className="px-5"
+                          style={{
+                            borderTop: "0",
+                            borderRight: "0",
+                            borderLeft: "0",
+                            borderBottom: "1px solid #D4D4C4",
+                          }}
+                        />
                       )}
                     </React.Fragment>
                   ))}
