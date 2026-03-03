@@ -1,0 +1,3 @@
+[build]
+  command = "pnpm install && cd editor && pnpm install && pnpm build"
+  publish = "editor/dist"
