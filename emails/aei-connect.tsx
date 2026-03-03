@@ -145,11 +145,7 @@ const NewsSection = ({ heading, items }: { heading: string; items: NewsItem[] })
         </Column>
         <Column className="align-top">
           <Text className="text-p text-aei-black m-0">
-            {item.textBefore}
-            <Link href={item.linkUrl} className="text-aei-red underline">
-              {item.linkText}
-            </Link>
-            {item.textAfter}
+            {parseLinks(item.text, "text-aei-red underline")}
           </Text>
         </Column>
       </Row>
@@ -183,7 +179,7 @@ const FeatureSection = ({
       )}
       {feature.title}
     </Heading>
-    <Text className="text-p text-aei-black my-0">{feature.description}</Text>
+    <Text className="text-p text-aei-black my-0">{parseLinks(feature.description, "text-aei-red underline")}</Text>
     {feature.ctaStyle === "button" ? (
       <Button
         href={feature.ctaUrl}
@@ -207,7 +203,7 @@ const FeatureSection = ({
 // Props
 // ---------------------------------------------------------------------------
 
-interface Article {
+export interface Article {
   heading?: string;
   /** Supports markdown-style links: [link text](url) */
   description: string;
@@ -217,7 +213,7 @@ interface Article {
   imageAlt: string;
 }
 
-interface Feature {
+export interface Feature {
   label?: string;
   title: string;
   description: string;
@@ -228,25 +224,48 @@ interface Feature {
   imageAlt: string;
 }
 
-interface NewsItem {
-  textBefore: string;
-  linkText: string;
-  linkUrl: string;
-  textAfter: string;
+export interface NewsItem {
+  /** Supports markdown-style links: [link text](url) */
+  text: string;
 }
 
-interface AEIConnectProps {
+export type BorderColor =
+  | "border-l-aei-purple"
+  | "border-l-aei-green"
+  | "border-l-aei-teal"
+  | "border-l-aei-blue"
+  | "border-l-aei-yellow"
+  | "border-l-aei-red";
+
+export type ContentSection =
+  | {
+      id: string;
+      type: "article-grid";
+      heading: string;
+      articles: Article[];
+      borderColor: BorderColor;
+      startWith: "text" | "image";
+    }
+  | {
+      id: string;
+      type: "feature";
+      sectionHeading: string;
+      feature: Feature;
+      borderColor: BorderColor;
+    }
+  | {
+      id: string;
+      type: "news";
+      heading: string;
+      items: NewsItem[];
+    };
+
+export interface AEIConnectProps {
   previewText: string;
   issueTitle: string;
   heroImageUrl: string;
   introText: string;
-  mediaArticles: Article[];
-  spotlight: Feature;
-  newHireSectionHeading: string;
-  newHires: Article[];
-  recognition: Feature;
-  careersArticles: Article[];
-  newsItems: NewsItem[];
+  sections: ContentSection[];
   footerAddress: string;
   unsubscribeUrl: string;
   updateProfileUrl: string;
@@ -262,65 +281,43 @@ export const AEIConnect = ({
   issueTitle = defaultProps.issueTitle,
   heroImageUrl = defaultProps.heroImageUrl,
   introText = defaultProps.introText,
-  mediaArticles = defaultProps.mediaArticles,
-  spotlight = defaultProps.spotlight,
-  newHireSectionHeading = defaultProps.newHireSectionHeading,
-  newHires = defaultProps.newHires,
-  recognition = defaultProps.recognition,
-  careersArticles = defaultProps.careersArticles,
-  newsItems = defaultProps.newsItems,
+  sections = defaultProps.sections,
   footerAddress = defaultProps.footerAddress,
   unsubscribeUrl = defaultProps.unsubscribeUrl,
   updateProfileUrl = defaultProps.updateProfileUrl,
   dataNoticeUrl = defaultProps.dataNoticeUrl,
 }: Partial<AEIConnectProps> = {}) => {
-  const contentSections = [
-    /* ----------------------------------------------------------------
-        In the Media
-    ----------------------------------------------------------------- */
-    <ArticleGrid key="media" heading="In the Media" articles={mediaArticles} />,
-
-    /* ----------------------------------------------------------------
-        Innovation in Action
-    ----------------------------------------------------------------- */
-    <FeatureSection key="innovation" sectionHeading="Innovation in Action" feature={spotlight} />,
-
-    /* ----------------------------------------------------------------
-        Welcoming New Talent
-    ----------------------------------------------------------------- */
-    <ArticleGrid
-      key="newhire"
-      heading={newHireSectionHeading}
-      articles={newHires}
-      borderColor="border-l-aei-green"
-    />,
-
-    /* ----------------------------------------------------------------
-        Recognition & Rankings
-    ----------------------------------------------------------------- */
-    <FeatureSection
-      key="recognition"
-      sectionHeading="Recognition &amp; Rankings"
-      feature={recognition}
-      borderColor="border-l-aei-yellow"
-    />,
-
-    /* ----------------------------------------------------------------
-        Join Our Team
-    ----------------------------------------------------------------- */
-    <ArticleGrid
-      key="careers"
-      heading="Join Our Team"
-      articles={careersArticles}
-      borderColor="border-l-aei-teal"
-      startWith="image"
-    />,
-
-    /* ----------------------------------------------------------------
-        In the News
-    ----------------------------------------------------------------- */
-    <NewsSection key="news" heading="In the News:" items={newsItems} />,
-  ];
+  const contentSections = sections.map((section) => {
+    switch (section.type) {
+      case "article-grid":
+        return (
+          <ArticleGrid
+            key={section.id}
+            heading={section.heading}
+            articles={section.articles}
+            borderColor={section.borderColor}
+            startWith={section.startWith}
+          />
+        );
+      case "feature":
+        return (
+          <FeatureSection
+            key={section.id}
+            sectionHeading={section.sectionHeading}
+            feature={section.feature}
+            borderColor={section.borderColor}
+          />
+        );
+      case "news":
+        return (
+          <NewsSection
+            key={section.id}
+            heading={section.heading}
+            items={section.items}
+          />
+        );
+    }
+  });
 
   return (
     <Html lang="en">
@@ -467,7 +464,9 @@ export const AEIConnect = ({
                     </Row>
                   </Section>
                   <Section className="bg-aei-light-warm p-5">
-                    <Heading as="h3" className="text-h3 text-aei-black m-0">{introText}</Heading>
+                    {introText.split(/\n\n+/).map((paragraph, i) => (
+                      <Heading key={i} as="h3" className={`text-h3 text-aei-black m-0${i > 0 ? " mt-3" : ""}`}>{parseLinks(paragraph, "text-aei-red underline")}</Heading>
+                    ))}
                   </Section>
 
                   {/* ----------------------------------------------------------------
@@ -583,104 +582,125 @@ export const AEIConnect = ({
 // Default / preview props — matches the design comp content
 // ---------------------------------------------------------------------------
 
-const defaultProps: AEIConnectProps = {
+export const defaultProps: AEIConnectProps = {
   previewText: "AEI Connect — insights, innovations, and news from across our teams.",
   issueTitle: "AEI Connect",
   heroImageUrl:
-    "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/innovation.png",
+    "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/hero.png",
   introText:
     "Welcome to this month\u2019s edition of AEI Connect\u2014a curated roundup of insights, innovations, and news from across our teams. Explore what\u2019s new, what\u2019s next, and how we\u2019re designing smarter together.",
 
-  mediaArticles: [
+  sections: [
     {
-      heading: "Fresh Perspectives from Our Experts",
-      description:
-        "In an interview with Buildings Magazine, Principal George Howe discusses the advantages of district energy systems and strategies for their deployment\u2026",
-      readMoreUrl: "https://aeieng.com",
-      readMoreText: "Read More \u2192",
-      imageUrl:
-        "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/fresh-perspectives.png",
-      imageAlt: "Fresh perspectives from our experts",
+      id: "media",
+      type: "article-grid",
+      heading: "In the Media",
+      borderColor: "border-l-aei-purple",
+      startWith: "text",
+      articles: [
+        {
+          heading: "Fresh Perspectives from Our Experts",
+          description:
+            "In an interview with Buildings Magazine, Principal George Howe discusses the advantages of district energy systems and strategies for their deployment\u2026",
+          readMoreUrl: "https://aeieng.com",
+          readMoreText: "Read More \u2192",
+          imageUrl:
+            "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/fresh-perspectives.png",
+          imageAlt: "Fresh perspectives from our experts",
+        },
+        {
+          description:
+            "In a CSE article, Senior Project Engineer Sam Buscemi examines how cooling infrastructure and power requirements for [AI data centers](https://aeieng.com) are reshaping the use of backup power systems. Sudden power interruptions of cooling failures can push GPU hardware\u2026",
+          imageUrl:
+            "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/ai-data-center.png",
+          imageAlt: "AI data center infrastructure",
+        },
+      ],
     },
     {
-      description:
-        "In a CSE article, Senior Project Engineer Sam Buscemi examines how cooling infrastructure and power requirements for [AI data centers](https://aeieng.com) are reshaping the use of backup power systems. Sudden power interruptions of cooling failures can push GPU hardware\u2026",
-      imageUrl:
-        "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/ai-data-center.png",
-      imageAlt: "AI data center infrastructure",
-    },
-  ],
-
-  spotlight: {
-    label: "Project Spotlight:",
-    title: "Genentech, Inc. B86 Laboratory Tenant Improvement",
-    description:
-      "This versatile, all-electric laboratory inspires innovation and collaboration while embracing sustainability. AEI\u2019s mechanical, electrical, and plumbing (MEP) and low-voltage engineering services were key to developing infrastructure to support advanced research and development models and promote collaboration among scientists.",
-    ctaText: "Explore more \u2192",
-    ctaUrl: "https://aeieng.com",
-    ctaStyle: "button",
-    imageUrl:
-      "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/innovation.png",
-    imageAlt: "Genentech B86 Laboratory interior showing collaborative workspace",
-  },
-
-  newHireSectionHeading: "Welcoming New Talent",
-  newHires: [
-    {
-      heading: "Meet Our Newest Director of BD",
-      description:
-        "We are excited to introduce [Ashley Hatley](https://aeieng.com), who will lead strategic client engagement and market growth initiatives across the firm\u2019s core markets in Phoenix, AZ.",
-      imageUrl:
-        "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/ashley.png",
-      imageAlt: "Ashley Hatley",
-    },
-  ],
-
-  recognition: {
-    title: "Celebrating Excellence",
-    description:
-      "AEI ranks among the nation\u2019s top Engineering firms in BD+C\u2019s 2025 Giants 400 Report. For the third consecutive year, we are ranked in the Top 2 Science & Technology Laboratory firms, following our #1 ranking in 2024.",
-    ctaText: "See more \u2192",
-    ctaUrl: "https://aeieng.com",
-    ctaStyle: "link",
-    imageUrl:
-      "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/recognition.png",
-    imageAlt: "AEI team members at industry event",
-  },
-
-  careersArticles: [
-    {
-      heading: "We\u2019re Hiring!",
-      description:
-        "Be a part of our growing team. At AEI, you\u2019ll join a collaborative community where your expertise fuels innovation, your ideas drive progress, and your work helps shape a brighter future. [Explore current opportunities across diverse disciplines.](https://aeieng.com)",
-      imageUrl:
-        "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/team.png",
-      imageAlt: "AEI team members collaborating",
-    },
-  ],
-
-  newsItems: [
-    {
-      textBefore:
-        "Principals Kwongyee Yoong and Sean Lawler discuss MEP design strategies for behavioral health facilities, exploring features that not only promote patient safety and comfort but also enhance facility functionality in ",
-      linkText: "Medical Construction & Design",
-      linkUrl: "https://aeieng.com",
-      textAfter: ".",
+      id: "innovation",
+      type: "feature",
+      sectionHeading: "Innovation in Action",
+      borderColor: "border-l-aei-blue",
+      feature: {
+        label: "Project Spotlight:",
+        title: "Genentech, Inc. B86 Laboratory Tenant Improvement",
+        description:
+          "This versatile, all-electric laboratory inspires innovation and collaboration while embracing sustainability. AEI\u2019s mechanical, electrical, and plumbing (MEP) and low-voltage engineering services were key to developing infrastructure to support advanced research and development models and promote collaboration among scientists.",
+        ctaText: "Explore more \u2192",
+        ctaUrl: "https://aeieng.com",
+        ctaStyle: "button",
+        imageUrl:
+          "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/innovation.png",
+        imageAlt: "Genentech B86 Laboratory interior showing collaborative workspace",
+      },
     },
     {
-      textBefore:
-        "Inspired by Principal Blythe Vogt\u2019s and Project Manager Holly Lattin\u2019s 2025 Lab Design Conference presentation, ",
-      linkText: "Lab Design News",
-      linkUrl: "https://aeieng.com",
-      textAfter:
-        " shares the story behind the University of Arkansas\u2019 Institute for Integrative and Innovative Research (I\u00B2R) design.",
+      id: "newhire",
+      type: "article-grid",
+      heading: "Welcoming New Talent",
+      borderColor: "border-l-aei-green",
+      startWith: "text",
+      articles: [
+        {
+          heading: "Meet Our Newest Director of BD",
+          description:
+            "We are excited to introduce [Ashley Hatley](https://aeieng.com), who will lead strategic client engagement and market growth initiatives across the firm\u2019s core markets in Phoenix, AZ.",
+          imageUrl:
+            "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/ashley.png",
+          imageAlt: "Ashley Hatley",
+        },
+      ],
     },
     {
-      textBefore: "In ",
-      linkText: "Campus Safety",
-      linkUrl: "https://aeieng.com",
-      textAfter:
-        ", Project Manager Sean Ahrens explores de-escalation as a strategy to defuse conflict and prevent workplace violence in healthcare settings.",
+      id: "recognition",
+      type: "feature",
+      sectionHeading: "Recognition & Rankings",
+      borderColor: "border-l-aei-yellow",
+      feature: {
+        title: "Celebrating Excellence",
+        description:
+          "AEI ranks among the nation\u2019s top Engineering firms in BD+C\u2019s 2025 Giants 400 Report. For the third consecutive year, we are ranked in the Top 2 Science & Technology Laboratory firms, following our #1 ranking in 2024.",
+        ctaText: "See more \u2192",
+        ctaUrl: "https://aeieng.com",
+        ctaStyle: "link",
+        imageUrl:
+          "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/recognition.png",
+        imageAlt: "AEI team members at industry event",
+      },
+    },
+    {
+      id: "careers",
+      type: "article-grid",
+      heading: "Join Our Team",
+      borderColor: "border-l-aei-teal",
+      startWith: "image",
+      articles: [
+        {
+          heading: "We\u2019re Hiring!",
+          description:
+            "Be a part of our growing team. At AEI, you\u2019ll join a collaborative community where your expertise fuels innovation, your ideas drive progress, and your work helps shape a brighter future. [Explore current opportunities across diverse disciplines.](https://aeieng.com)",
+          imageUrl:
+            "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/team.png",
+          imageAlt: "AEI team members collaborating",
+        },
+      ],
+    },
+    {
+      id: "news",
+      type: "news",
+      heading: "In the News:",
+      items: [
+        {
+          text: "Principals Kwongyee Yoong and Sean Lawler discuss MEP design strategies for behavioral health facilities, exploring features that not only promote patient safety and comfort but also enhance facility functionality in [Medical Construction & Design](https://aeieng.com).",
+        },
+        {
+          text: "Inspired by Principal Blythe Vogt\u2019s and Project Manager Holly Lattin\u2019s 2025 Lab Design Conference presentation, [Lab Design News](https://aeieng.com) shares the story behind the University of Arkansas\u2019 Institute for Integrative and Innovative Research (I\u00B2R) design.",
+        },
+        {
+          text: "In [Campus Safety](https://aeieng.com), Project Manager Sean Ahrens explores de-escalation as a strategy to defuse conflict and prevent workplace violence in healthcare settings.",
+        },
+      ],
     },
   ],
 
