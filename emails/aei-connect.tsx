@@ -485,9 +485,18 @@ export const AEIConnect = ({
                   {/* ----------------------------------------------------------------
               Footer
           ----------------------------------------------------------------- */}
-                  <Section className="footer bg-aei-light-warm" style={{ position: "relative" }}>
+                  <Section className="footer bg-aei-light-warm">
                     <Row>
-                      <td className="pt-9 pb-8 px-8 text-center">
+                      <td
+                        className="pt-9 pb-8 px-8 text-center"
+                        style={{
+                          backgroundImage:
+                            "linear-gradient(to top right, #F14326 50%, transparent 50%)",
+                          backgroundSize: "110px 110px",
+                          backgroundPosition: "bottom left",
+                          backgroundRepeat: "no-repeat",
+                        }}
+                      >
                         <Text
                           className="text-p-small text-aei-black m-0 mb-3"
                           style={{ lineHeight: "1.6" }}
@@ -549,8 +558,7 @@ export const AEIConnect = ({
                         </Link>
                       </td>
                     </Row>
-                    {/* Red triangle in bottom-left corner */}
-                    {/* VML version for Outlook */}
+                    {/* Red triangle in bottom-left corner — VML for Outlook */}
                     <span
                       dangerouslySetInnerHTML={{
                         __html: `<!--[if mso]>
@@ -558,28 +566,6 @@ export const AEIConnect = ({
   <v:fill type="solid" color="#F14326" />
 </v:shape>
 <![endif]-->`,
-                      }}
-                    />
-                    {/* CSS version for modern clients */}
-                    <span
-                      dangerouslySetInnerHTML={{
-                        __html: `<!--[if !mso]><!-->`,
-                      }}
-                    />
-                    <div
-                      style={{
-                        position: "absolute",
-                        bottom: "0",
-                        left: "0",
-                        width: "0",
-                        height: "0",
-                        borderLeft: "110px solid #F14326",
-                        borderTop: "110px solid transparent",
-                      }}
-                    />
-                    <span
-                      dangerouslySetInnerHTML={{
-                        __html: `<!--<![endif]-->`,
                       }}
                     />
                   </Section>
