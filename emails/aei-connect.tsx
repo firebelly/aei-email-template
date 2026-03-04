@@ -77,7 +77,7 @@ const ArticleGrid = ({
             {parseLinks(article.description, "text-aei-red underline")}
           </Text>
           {article.readMoreUrl && (
-            <Text className={`text-p text-aei-black mt-0 mx-2.5 mb-2.5`}>
+            <Text className={`text-p text-aei-black mt-2 mx-2.5 mb-2.5`}>
               <Link href={article.readMoreUrl} className="text-p text-aei-red no-underline">
                 {article.readMoreText ?? "Read More →"}
               </Link>
@@ -91,8 +91,7 @@ const ArticleGrid = ({
           style={{
             width: "50%",
             verticalAlign: "top",
-            backgroundColor: "red",
-            background: `red url(${article.imageUrl}) no-repeat center center / cover`,
+            background: `url(${article.imageUrl}) no-repeat center center / cover`,
             minHeight: "120px",
             padding: "0",
             fontSize: "0",
@@ -101,7 +100,7 @@ const ArticleGrid = ({
           dangerouslySetInnerHTML={{
             __html: `
               <!--[if mso]>
-              <img src="${article.imageUrl}" width="300" style="width:300px;display:block;" alt="" />
+              <img src="${article.imageUrl}" width="284" style="width:284px;display:block;" alt="" />
               <![endif]-->
               <!--[if !mso]><!-->
               <div style="min-height:120px;font-size:0;line-height:0;">&nbsp;</div>
@@ -122,7 +121,7 @@ const ArticleGrid = ({
             borderLeft: `3px solid ${borderColorMap[borderColor]}`,
           }}
         >
-          <Row style={{ backgroundColor: "green" }}>
+          <Row>
             {textFirst ? (
               <>
                 {textCol}
@@ -196,20 +195,24 @@ const FeatureSection = ({
     </Heading>
     <Text className="text-p text-aei-black my-0">{parseLinks(feature.description, "text-aei-red underline")}</Text>
     {feature.ctaStyle === "button" ? (
-      <Button
-        href={feature.ctaUrl}
-        className="bg-aei-red text-white text-p mt-3 py-2.5 px-5 no-underline"
-      >
-        {feature.ctaText}
-      </Button>
+      <Text className="mt-3 mb-0">
+        <Button
+          href={feature.ctaUrl}
+          className="bg-aei-red text-white text-p py-2.5 px-5 no-underline"
+        >
+          {feature.ctaText}
+        </Button>
+      </Text>
     ) : (
-      <Link
-        href={feature.ctaUrl}
-        className="text-p text-aei-red"
-        style={{ textDecoration: "none" }}
-      >
-        {feature.ctaText}
-      </Link>
+      <Text className="mt-1 mb-0">
+        <Link
+          href={feature.ctaUrl}
+          className="text-p text-aei-red"
+          style={{ textDecoration: "none" }}
+        >
+          {feature.ctaText}
+        </Link>
+      </Text>
     )}
   </Section>
 );
@@ -264,26 +267,26 @@ const borderColorMap: Record<BorderColor, string> = {
 
 export type ContentSection =
   | {
-      id: string;
-      type: "article-grid";
-      heading: string;
-      articles: Article[];
-      borderColor: BorderColor;
-      startWith: "text" | "image";
-    }
+    id: string;
+    type: "article-grid";
+    heading: string;
+    articles: Article[];
+    borderColor: BorderColor;
+    startWith: "text" | "image";
+  }
   | {
-      id: string;
-      type: "feature";
-      sectionHeading: string;
-      feature: Feature;
-      borderColor: BorderColor;
-    }
+    id: string;
+    type: "feature";
+    sectionHeading: string;
+    feature: Feature;
+    borderColor: BorderColor;
+  }
   | {
-      id: string;
-      type: "news";
-      heading: string;
-      items: NewsItem[];
-    };
+    id: string;
+    type: "news";
+    heading: string;
+    items: NewsItem[];
+  };
 
 export interface AEIConnectProps {
   previewText: string;
@@ -649,7 +652,7 @@ export const defaultProps: AEIConnectProps = {
           readMoreUrl: "https://aeieng.com",
           readMoreText: "Read More \u2192",
           imageUrl:
-            "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/fresh-perspectives.png",
+            "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/outlook-fixes/emails/static/fresh-perspectives.png",
           imageAlt: "Fresh perspectives from our experts",
         },
         {
