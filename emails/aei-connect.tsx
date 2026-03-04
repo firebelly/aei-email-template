@@ -66,20 +66,22 @@ const ArticleGrid = ({
       const textCol = (
         <Column
           key="text"
-          className={`w-1/2 align-top p-2.5${textFirst ? " bg-aei-light-warm" : ""}`}
+          className={`w-1/2 align-top${textFirst ? " bg-aei-light-warm" : ""}`}
         >
           {article.heading && (
-            <Heading as="h3" className="text-h3 text-aei-black mt-0 mb-2">
+            <Heading as="h3" className="text-h3 text-aei-black mt-2.5 mb-2 mx-2.5">
               {article.heading}
             </Heading>
           )}
-          <Text className="text-p text-aei-black my-0">
+          <Text className={`text-p text-aei-black mx-2.5${article.heading ? " mt-0" : " mt-2.5"}${article.readMoreUrl ? " mb-0" : " mb-2.5"}`}>
             {parseLinks(article.description, "text-aei-red underline")}
           </Text>
           {article.readMoreUrl && (
-            <Link href={article.readMoreUrl} className="text-p text-aei-red no-underline">
-              {article.readMoreText ?? "Read More →"}
-            </Link>
+            <Text className={`text-p text-aei-black mt-0 mx-2.5 mb-2.5`}>
+              <Link href={article.readMoreUrl} className="text-p text-aei-red no-underline">
+                {article.readMoreText ?? "Read More →"}
+              </Link>
+            </Text>
           )}
         </Column>
       );
@@ -89,21 +91,21 @@ const ArticleGrid = ({
           style={{
             width: "50%",
             verticalAlign: "top",
-            background: `url(${article.imageUrl}) no-repeat center center / cover`,
+            backgroundColor: "red",
+            background: `red url(${article.imageUrl}) no-repeat center center / cover`,
             minHeight: "120px",
+            padding: "0",
+            fontSize: "0",
+            lineHeight: "0",
           }}
           dangerouslySetInnerHTML={{
             __html: `
               <!--[if mso]>
-              <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:260px;min-height:120px;">
-                <v:fill type="frame" src="${article.imageUrl}" />
-                <v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0">
+              <img src="${article.imageUrl}" width="300" style="width:300px;display:block;" alt="" />
               <![endif]-->
+              <!--[if !mso]><!-->
               <div style="min-height:120px;font-size:0;line-height:0;">&nbsp;</div>
-              <!--[if mso]>
-                </v:textbox>
-              </v:rect>
-              <![endif]-->
+              <!--<![endif]-->
             `,
           }}
         />
@@ -120,7 +122,7 @@ const ArticleGrid = ({
             borderLeft: `3px solid ${borderColorMap[borderColor]}`,
           }}
         >
-          <Row>
+          <Row style={{ backgroundColor: "green" }}>
             {textFirst ? (
               <>
                 {textCol}
@@ -418,7 +420,7 @@ export const AEIConnect = ({
                       >
                         <span
                           dangerouslySetInnerHTML={{
-                            __html: `<!--[if mso]><v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;"><v:fill type="frame" src="${heroImageUrl}" /><v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0"><![endif]-->`,
+                            __html: `<!--[if mso]><v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;height:220px;"><v:fill type="frame" src="${heroImageUrl}" /><v:textbox inset="0,0,0,0"><![endif]-->`,
                           }}
                         />
                         <table
