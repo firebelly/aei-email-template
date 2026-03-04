@@ -111,17 +111,19 @@ const ArticleGrid = ({
       );
 
       return (
-        <Section
-          key={i}
-          className={i > 0 ? "mt-5" : ""}
-          style={{
-            borderTop: "0",
-            borderRight: "0",
-            borderBottom: "0",
-            borderLeft: `3px solid ${borderColorMap[borderColor]}`,
-          }}
-        >
-          <Row>
+        <React.Fragment key={i}>
+          {i > 0 && (
+            <div style={{ height: "20px", lineHeight: "20px", fontSize: "1px" }}>&nbsp;</div>
+          )}
+          <Section
+            style={{
+              borderTop: "0",
+              borderRight: "0",
+              borderBottom: "0",
+              borderLeft: `3px solid ${borderColorMap[borderColor]}`,
+            }}
+          >
+            <Row>
             {textFirst ? (
               <>
                 {textCol}
@@ -134,7 +136,8 @@ const ArticleGrid = ({
               </>
             )}
           </Row>
-        </Section>
+          </Section>
+        </React.Fragment>
       );
     })}
   </Section>
