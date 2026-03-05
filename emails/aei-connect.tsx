@@ -64,16 +64,15 @@ const ArticleGrid = ({
     {articles.map((article, i) => {
       const textFirst = startWith === "text" ? i % 2 === 0 : i % 2 !== 0;
       const textCol = (
-        <Column
-          key="text"
-          className={`w-1/2 align-top${textFirst ? " bg-aei-light-warm" : ""}`}
-        >
+        <Column key="text" className={`w-1/2 align-top${textFirst ? " bg-aei-light-warm" : ""}`}>
           {article.heading && (
             <Heading as="h3" className="text-h3 text-aei-black mt-2.5 mb-2 mx-2.5">
               {article.heading}
             </Heading>
           )}
-          <Text className={`text-p text-aei-black mx-2.5${article.heading ? " mt-0" : " mt-2.5"}${article.readMoreUrl ? " mb-0" : " mb-2.5"}`}>
+          <Text
+            className={`text-p text-aei-black mx-2.5${article.heading ? " mt-0" : " mt-2.5"}${article.readMoreUrl ? " mb-0" : " mb-2.5"}`}
+          >
             {parseLinks(article.description, "text-aei-red underline")}
           </Text>
           {article.readMoreUrl && (
@@ -124,18 +123,18 @@ const ArticleGrid = ({
             }}
           >
             <Row>
-            {textFirst ? (
-              <>
-                {textCol}
-                {imageCol}
-              </>
-            ) : (
-              <>
-                {imageCol}
-                {textCol}
-              </>
-            )}
-          </Row>
+              {textFirst ? (
+                <>
+                  {textCol}
+                  {imageCol}
+                </>
+              ) : (
+                <>
+                  {imageCol}
+                  {textCol}
+                </>
+              )}
+            </Row>
           </Section>
         </React.Fragment>
       );
@@ -196,7 +195,9 @@ const FeatureSection = ({
       )}
       {feature.title}
     </Heading>
-    <Text className="text-p text-aei-black my-0">{parseLinks(feature.description, "text-aei-red underline")}</Text>
+    <Text className="text-p text-aei-black my-0">
+      {parseLinks(feature.description, "text-aei-red underline")}
+    </Text>
     {feature.ctaStyle === "button" ? (
       <Text className="mt-3 mb-0">
         <Button
@@ -270,26 +271,26 @@ const borderColorMap: Record<BorderColor, string> = {
 
 export type ContentSection =
   | {
-    id: string;
-    type: "article-grid";
-    heading: string;
-    articles: Article[];
-    borderColor: BorderColor;
-    startWith: "text" | "image";
-  }
+      id: string;
+      type: "article-grid";
+      heading: string;
+      articles: Article[];
+      borderColor: BorderColor;
+      startWith: "text" | "image";
+    }
   | {
-    id: string;
-    type: "feature";
-    sectionHeading: string;
-    feature: Feature;
-    borderColor: BorderColor;
-  }
+      id: string;
+      type: "feature";
+      sectionHeading: string;
+      feature: Feature;
+      borderColor: BorderColor;
+    }
   | {
-    id: string;
-    type: "news";
-    heading: string;
-    items: NewsItem[];
-  };
+      id: string;
+      type: "news";
+      heading: string;
+      items: NewsItem[];
+    };
 
 export interface AEIConnectProps {
   previewText: string;
@@ -340,13 +341,7 @@ export const AEIConnect = ({
           />
         );
       case "news":
-        return (
-          <NewsSection
-            key={section.id}
-            heading={section.heading}
-            items={section.items}
-          />
-        );
+        return <NewsSection key={section.id} heading={section.heading} items={section.items} />;
     }
   });
 
@@ -376,11 +371,6 @@ export const AEIConnect = ({
               .footer p, .footer a { font-size: 12px !important; }
             }
           `}</style>
-          <span
-            dangerouslySetInnerHTML={{
-              __html: `<!--[if mso]><style>table, td { border: none; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }</style><![endif]-->`,
-            }}
-          />
         </Head>
         <Preview>{previewText}</Preview>
         <Body className="bg-aei-bg font-sans" style={{ margin: "0", padding: "0" }}>
@@ -426,7 +416,7 @@ export const AEIConnect = ({
                       >
                         <span
                           dangerouslySetInnerHTML={{
-                            __html: `<!--[if mso]><v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;height:220px;"><v:fill type="frame" src="${heroImageUrl}" /><v:textbox inset="0,0,0,0"><![endif]-->`,
+                            __html: `<!--[if mso]><v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;"><v:fill type="frame" src="${heroImageUrl}" /><v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0"><![endif]-->`,
                           }}
                         />
                         <table
@@ -449,13 +439,7 @@ export const AEIConnect = ({
                             >
                               <Heading
                                 as="h1"
-                                className="text-h1 text-white m-0 pl-2"
-                                style={{
-                                  borderTop: "0",
-                                  borderRight: "0",
-                                  borderBottom: "0",
-                                  borderLeft: "4px solid #F14326",
-                                }}
+                                className="text-h1 text-white m-0 border-0 border-l-4 border-solid border-l-aei-red pl-2"
                               >
                                 {issueTitle}
                               </Heading>
@@ -507,7 +491,13 @@ export const AEIConnect = ({
                   </Section>
                   <Section className="bg-aei-light-warm p-5">
                     {introText.split(/\n\n+/).map((paragraph, i) => (
-                      <Heading key={i} as="h3" className={`text-h3 text-aei-black m-0${i > 0 ? " mt-3" : ""}`}>{parseLinks(paragraph, "text-aei-red underline")}</Heading>
+                      <Heading
+                        key={i}
+                        as="h3"
+                        className={`text-h3 text-aei-black m-0${i > 0 ? " mt-3" : ""}`}
+                      >
+                        {parseLinks(paragraph, "text-aei-red underline")}
+                      </Heading>
                     ))}
                   </Section>
 
@@ -636,7 +626,7 @@ export const defaultProps: AEIConnectProps = {
   previewText: "AEI Connect — insights, innovations, and news from across our teams.",
   issueTitle: "AEI Connect",
   heroImageUrl:
-    "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/hero.png",
+    "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/outlook-fixes/emails/static/hero--cropped.png",
   introText:
     "Welcome to this month\u2019s edition of AEI Connect\u2014a curated roundup of insights, innovations, and news from across our teams. Explore what\u2019s new, what\u2019s next, and how we\u2019re designing smarter together.",
 
