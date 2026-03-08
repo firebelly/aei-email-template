@@ -64,7 +64,7 @@ const ArticleGrid = ({
     {articles.map((article, i) => {
       const textFirst = startWith === "text" ? i % 2 === 0 : i % 2 !== 0;
       const textCol = (
-        <Column key="text" className={`w-1/2 align-top${textFirst ? " bg-aei-light-warm" : ""}`}>
+        <Column key="text" width="50%" className={`w-1/2 align-top${textFirst ? " bg-aei-light-warm" : ""}`}>
           {article.heading && (
             <Heading as="h3" className="text-h3 text-aei-black mt-2.5 mb-2 mx-2.5">
               {article.heading}
@@ -87,6 +87,7 @@ const ArticleGrid = ({
       const imageCol = (
         <td
           key="image"
+          width="50%"
           style={{
             width: "50%",
             verticalAlign: "top",
@@ -99,7 +100,7 @@ const ArticleGrid = ({
           dangerouslySetInnerHTML={{
             __html: `
               <!--[if mso]>
-              <img src="${article.imageUrl}" width="284" style="width:284px;display:block;" alt="" />
+              <img src="${article.imageUrl}" width="278" style="width:278px;display:block;" alt="" />
               <![endif]-->
               <!--[if !mso]><!-->
               <div style="min-height:120px;font-size:0;line-height:0;">&nbsp;</div>
@@ -114,28 +115,45 @@ const ArticleGrid = ({
           {i > 0 && (
             <div style={{ height: "20px", lineHeight: "20px", fontSize: "1px" }}>&nbsp;</div>
           )}
-          <Section
-            style={{
-              borderTop: "0",
-              borderRight: "0",
-              borderBottom: "0",
-              borderLeft: `3px solid ${borderColorMap[borderColor]}`,
-            }}
+          <table
+            role="presentation"
+            width="100%"
+            cellPadding={0}
+            cellSpacing={0}
+            style={{ borderCollapse: "collapse" }}
           >
-            <Row>
-              {textFirst ? (
-                <>
-                  {textCol}
-                  {imageCol}
-                </>
-              ) : (
-                <>
-                  {imageCol}
-                  {textCol}
-                </>
-              )}
-            </Row>
-          </Section>
+            <tr>
+              <td
+                style={{
+                  width: "3px",
+                  backgroundColor: borderColorMap[borderColor],
+                }}
+              />
+              <td style={{ padding: 0 }}>
+                <table
+                  role="presentation"
+                  width="100%"
+                  cellPadding={0}
+                  cellSpacing={0}
+                  style={{ borderCollapse: "collapse" }}
+                >
+                  <tr>
+                    {textFirst ? (
+                      <>
+                        {textCol}
+                        {imageCol}
+                      </>
+                    ) : (
+                      <>
+                        {imageCol}
+                        {textCol}
+                      </>
+                    )}
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
         </React.Fragment>
       );
     })}
@@ -175,16 +193,26 @@ const FeatureSection = ({
   <Section className="px-5 py-5">
     <SectionHeading>{sectionHeading}</SectionHeading>
 
-    <Section
-      style={{
-        borderTop: "0",
-        borderRight: "0",
-        borderBottom: "0",
-        borderLeft: `3px solid ${borderColorMap[borderColor]}`,
-      }}
+    <table
+      role="presentation"
+      width="100%"
+      cellPadding={0}
+      cellSpacing={0}
+      style={{ borderCollapse: "collapse" }}
     >
-      <Img src={feature.imageUrl} alt={feature.imageAlt} width="568" className="w-full" />
-    </Section>
+      <tr>
+        <td
+          width="3"
+          style={{
+            width: "3px",
+            backgroundColor: borderColorMap[borderColor],
+          }}
+        />
+        <td>
+          <Img src={feature.imageUrl} alt={feature.imageAlt} width="557" className="w-full" />
+        </td>
+      </tr>
+    </table>
 
     <Heading as="h3" className="text-h3 text-aei-black my-3">
       {feature.label && (
@@ -346,10 +374,15 @@ export const AEIConnect = ({
   });
 
   return (
-    <Html lang="en">
+    <Html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
       <Tailwind config={tailwindConfig}>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <span
+            dangerouslySetInnerHTML={{
+              __html: `<!--[if gte mso 9]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->`,
+            }}
+          />
           <meta
             name="format-detection"
             content="telephone=no, date=no, address=no, email=no, url=no"
@@ -406,89 +439,22 @@ export const AEIConnect = ({
                   {/* ----------------------------------------------------------------
               Intro — hero image with chevron cutout + intro text
           ----------------------------------------------------------------- */}
-                  <Section>
-                    <Row>
+                  <table
+                    role="presentation"
+                    width="100%"
+                    border={0}
+                    cellPadding={0}
+                    cellSpacing={0}
+                    style={{ borderCollapse: "collapse" }}
+                  >
+                    <tr>
                       <td
-                        style={{
-                          background: `url(${heroImageUrl}) no-repeat center center / cover`,
-                          height: "220px",
+                        dangerouslySetInnerHTML={{
+                          __html: `<!--[if mso]><v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;height:220px;"><v:fill type="frame" src="${heroImageUrl}" /><v:textbox style="v-text-anchor:middle" inset="0,0,0,0"><![endif]--><div style="background:url(${heroImageUrl}) no-repeat center center / cover;height:220px;"><table role="presentation" width="100%" height="220" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:4px solid #F14326">${issueTitle}</h1></td><td style="width:80px;vertical-align:top;padding:0"><table role="presentation" cellpadding="0" cellspacing="0" width="80" style="border-collapse:collapse"><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #F6F7F5;border-bottom:110px solid transparent"></div></td></tr><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #F14326;border-top:110px solid transparent"></div></td></tr></table></td></tr></table></div><!--[if mso]></v:textbox></v:rect><![endif]-->`,
                         }}
-                      >
-                        <span
-                          dangerouslySetInnerHTML={{
-                            __html: `<!--[if mso]><v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;"><v:fill type="frame" src="${heroImageUrl}" /><v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0"><![endif]-->`,
-                          }}
-                        />
-                        <table
-                          role="presentation"
-                          width="100%"
-                          cellPadding={0}
-                          cellSpacing={0}
-                          style={{ borderCollapse: "collapse" }}
-                        >
-                          <tr>
-                            {/* Left spacer */}
-                            <td style={{ width: "20px" }} />
-                            {/* Heading with red left border */}
-                            <td
-                              style={{
-                                paddingTop: "24px",
-                                paddingBottom: "24px",
-                                verticalAlign: "middle",
-                              }}
-                            >
-                              <Heading
-                                as="h1"
-                                className="text-h1 text-white m-0 border-0 border-l-4 border-solid border-l-aei-red pl-2"
-                              >
-                                {issueTitle}
-                              </Heading>
-                            </td>
-                            {/* White chevron triangles */}
-                            <td style={{ width: "80px", verticalAlign: "top", padding: "0" }}>
-                              <table
-                                role="presentation"
-                                cellPadding={0}
-                                cellSpacing={0}
-                                width={80}
-                                style={{ borderCollapse: "collapse" }}
-                              >
-                                <tr>
-                                  <td style={{ fontSize: "0", lineHeight: "0" }}>
-                                    <div
-                                      style={{
-                                        width: "0",
-                                        height: "0",
-                                        borderRight: "110px solid #F6F7F5",
-                                        borderBottom: "110px solid transparent",
-                                      }}
-                                    />
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td style={{ fontSize: "0", lineHeight: "0" }}>
-                                    <div
-                                      style={{
-                                        width: "0",
-                                        height: "0",
-                                        borderRight: "110px solid #F14326",
-                                        borderTop: "110px solid transparent",
-                                      }}
-                                    />
-                                  </td>
-                                </tr>
-                              </table>
-                            </td>
-                          </tr>
-                        </table>
-                        <span
-                          dangerouslySetInnerHTML={{
-                            __html: `<!--[if mso]></v:textbox></v:rect><![endif]-->`,
-                          }}
-                        />
-                      </td>
-                    </Row>
-                  </Section>
+                      />
+                    </tr>
+                  </table>
                   <Section className="bg-aei-light-warm p-5">
                     {introText.split(/\n\n+/).map((paragraph, i) => (
                       <Heading
@@ -504,10 +470,10 @@ export const AEIConnect = ({
                   {/* ----------------------------------------------------------------
               Content sections with auto bottom borders
           ----------------------------------------------------------------- */}
-                  {contentSections.map((section, i) => (
+                  {contentSections.map((section, i, arr) => (
                     <React.Fragment key={section.key}>
                       {section}
-                      {i < contentSections.length - 1 && (
+                      {i < arr.length - 1 && (
                         <Section
                           className="px-5"
                           style={{
