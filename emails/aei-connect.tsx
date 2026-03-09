@@ -403,6 +403,7 @@ export const AEIConnect = ({
               h3 { font-size: 14px !important; }
               p, a { font-size: 13px !important; }
               .footer p, .footer a { font-size: 12px !important; }
+              h1 { border-left-width: 6px !important; }
             }
           `}</style>
         </Head>
@@ -457,12 +458,12 @@ export const AEIConnect = ({
 <v:shape filled="true" stroked="false" coordsize="110,110" style="position:absolute;left:490;top:0;width:110;height:110;" path="m 0,0 l 110,0 110,110 x e"><v:fill color="#f5f1ed" /></v:shape>
 <v:shape filled="true" stroked="false" coordsize="110,110" style="position:absolute;left:490;top:110;width:110;height:110;" path="m 110,0 l 110,110 0,110 x e"><v:fill color="#ef4734" /></v:shape>
 <v:rect filled="false" stroked="false" style="position:absolute;left:0;top:0;width:600;height:220;"><v:textbox style="v-text-anchor:middle" inset="0,0,0,0">
-<table role="presentation" width="100%" height="220" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:4px solid #ef4734">${issueTitle}</h1></td><td style="width:110px"></td></tr></table>
+<table role="presentation" width="100%" height="220" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:6px solid #ef4734">${issueTitle}</h1></td><td style="width:110px"></td></tr></table>
 </v:textbox></v:rect>
 </v:group>
 <![endif]-->
 <!--[if !mso]><!-->
-<div style="background:url(${heroImageUrl}) no-repeat center center / cover;height:220px;"><table role="presentation" width="100%" height="220" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:4px solid #ef4734">${issueTitle}</h1></td><td style="width:80px;vertical-align:top;padding:0"><table role="presentation" cellpadding="0" cellspacing="0" width="80" style="border-collapse:collapse"><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #f5f1ed;border-bottom:110px solid transparent"></div></td></tr><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #ef4734;border-top:110px solid transparent"></div></td></tr></table></td></tr></table></div>
+<div style="background:url(${heroImageUrl}) no-repeat center center / cover;height:220px;"><table role="presentation" width="100%" height="220" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:5px solid #ef4734">${issueTitle}</h1></td><td style="width:80px;vertical-align:top;padding:0"><table role="presentation" cellpadding="0" cellspacing="0" width="80" style="border-collapse:collapse"><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #f5f1ed;border-bottom:110px solid transparent"></div></td></tr><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #ef4734;border-top:110px solid transparent"></div></td></tr></table></td></tr></table></div>
 <!--<![endif]-->`,
                         }}
                       />
