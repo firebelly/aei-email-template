@@ -196,20 +196,21 @@ const FeatureSection = ({
     <table
       role="presentation"
       width="100%"
+      border={0}
       cellPadding={0}
       cellSpacing={0}
       style={{ borderCollapse: "collapse" }}
     >
       <tr>
         <td
-          width="3"
           style={{
-            width: "3px",
-            backgroundColor: borderColorMap[borderColor],
+            borderLeft: `3px solid ${borderColorMap[borderColor]}`,
+            padding: 0,
+            lineHeight: 0,
+            fontSize: 0,
           }}
-        />
-        <td>
-          <Img src={feature.imageUrl} alt={feature.imageAlt} width="557" className="w-full" />
+        >
+          <Img src={feature.imageUrl} alt={feature.imageAlt} width="557" className="w-full" style={{ display: "block" }} />
         </td>
       </tr>
     </table>
