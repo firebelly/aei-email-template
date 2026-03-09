@@ -42,6 +42,7 @@ export function ArticleEditor({
         value={article.imageUrl}
         onChange={(v) => update("imageUrl", v)}
         required
+        helpText="Aspect ratio: 3:2"
       />
       <TextField
         label="Image Alt"

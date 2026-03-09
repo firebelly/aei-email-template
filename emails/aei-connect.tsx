@@ -92,7 +92,7 @@ const ArticleGrid = ({
             width: "50%",
             verticalAlign: "top",
             background: `url(${article.imageUrl}) no-repeat center top / cover`,
-            minHeight: "180px",
+            minHeight: "186px",
             padding: "0",
             fontSize: "0",
             lineHeight: "0",
@@ -103,7 +103,7 @@ const ArticleGrid = ({
               <img src="${article.imageUrl}" width="278" style="width:278px;display:block;" alt="" />
               <![endif]-->
               <!--[if !mso]><!-->
-              <div style="min-height:180px;font-size:0;line-height:0;">&nbsp;</div>
+              <div style="min-height:186px;font-size:0;line-height:0;">&nbsp;</div>
               <!--<![endif]-->
             `,
           }}

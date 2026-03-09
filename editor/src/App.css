@@ -292,6 +292,13 @@ details>.section-content {
   border-color: var(--aei-red);
 }
 
+.help-text {
+  display: block;
+  font-size: 10px;
+  color: #888;
+  margin-top: 3px;
+}
+
 details.details-missing {
   border-color: var(--aei-red);
 }

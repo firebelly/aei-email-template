@@ -57,6 +57,7 @@ export function FeatureEditor({
         value={feature.imageUrl}
         onChange={(v) => update("imageUrl", v)}
         required
+        helpText="Aspect ratio: 2:1"
       />
       <TextField
         label="Image Alt"

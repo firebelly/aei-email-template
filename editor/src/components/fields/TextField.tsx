@@ -3,11 +3,13 @@ export function TextField({
   value,
   onChange,
   required,
+  helpText,
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
   required?: boolean;
+  helpText?: string;
 }) {
   const empty = required && !value.trim();
   return (
@@ -18,6 +20,7 @@ export function TextField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />
+      {helpText && <span className="help-text">{helpText}</span>}
     </div>
   );
 }
