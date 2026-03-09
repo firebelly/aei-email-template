@@ -530,6 +530,8 @@ export const AEIConnect = ({
                           >
                             Unsubscribe
                           </Link>
+                          {" "}
+                          <span dangerouslySetInnerHTML={{ __html: "<!--[if mso]>&nbsp;&nbsp;&nbsp;<![endif]-->" }} />
                           <Link
                             href={updateProfileUrl}
                             className="text-aei-black underline"
@@ -541,6 +543,8 @@ export const AEIConnect = ({
                           >
                             Update Profile
                           </Link>
+                          {" "}
+                          <span dangerouslySetInnerHTML={{ __html: "<!--[if mso]>&nbsp;&nbsp;&nbsp;<![endif]-->" }} />
                           <Link
                             href={dataNoticeUrl}
                             className="text-aei-black underline"
