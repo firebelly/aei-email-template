@@ -54,7 +54,7 @@ const ArticleGrid = ({
 }: {
   heading: string;
   articles: Article[];
-  borderColor?: string;
+  borderColor?: BorderColor;
   /** Which column appears first in the first row. Subsequent rows alternate. */
   startWith?: "text" | "image";
 }) => (
@@ -188,7 +188,7 @@ const FeatureSection = ({
 }: {
   sectionHeading: string;
   feature: Feature;
-  borderColor?: string;
+  borderColor?: BorderColor;
 }) => (
   <Section className="px-5 py-5">
     <SectionHeading>{sectionHeading}</SectionHeading>
@@ -375,7 +375,7 @@ export const AEIConnect = ({
   });
 
   return (
-    <Html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+    <Html lang="en" {...{ "xmlns:v": "urn:schemas-microsoft-com:vml", "xmlns:o": "urn:schemas-microsoft-com:office:office" }}>
       <Tailwind config={tailwindConfig}>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
