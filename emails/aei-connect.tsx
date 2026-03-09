@@ -64,7 +64,7 @@ const ArticleGrid = ({
     {articles.map((article, i) => {
       const textFirst = startWith === "text" ? i % 2 === 0 : i % 2 !== 0;
       const textCol = (
-        <Column key="text" width="50%" className={`w-1/2 align-top${textFirst ? " bg-aei-light-warm" : ""}`}>
+        <Column key="text" width="50%" className={`w-1/2 align-top${textFirst ? " bg-aei-light-gray" : ""}`}>
           {article.heading && (
             <Heading as="h3" className="text-h3 text-aei-black mt-2.5 mb-2 mx-2.5">
               {article.heading}
@@ -289,36 +289,36 @@ export type BorderColor =
 
 /** Maps Tailwind border-color class names to hex values for inline styles (Outlook-safe) */
 const borderColorMap: Record<BorderColor, string> = {
-  "border-l-aei-purple": "#8177A5",
-  "border-l-aei-green": "#86C54C",
-  "border-l-aei-teal": "#4FC0B8",
-  "border-l-aei-blue": "#549DC0",
-  "border-l-aei-yellow": "#FFCD4D",
-  "border-l-aei-red": "#F14326",
+  "border-l-aei-purple": "#8373a5",
+  "border-l-aei-green": "#8EC150",
+  "border-l-aei-teal": "#49B7B6",
+  "border-l-aei-blue": "#5193BF",
+  "border-l-aei-yellow": "#FCC947",
+  "border-l-aei-red": "#ef4734",
 };
 
 export type ContentSection =
   | {
-      id: string;
-      type: "article-grid";
-      heading: string;
-      articles: Article[];
-      borderColor: BorderColor;
-      startWith: "text" | "image";
-    }
+    id: string;
+    type: "article-grid";
+    heading: string;
+    articles: Article[];
+    borderColor: BorderColor;
+    startWith: "text" | "image";
+  }
   | {
-      id: string;
-      type: "feature";
-      sectionHeading: string;
-      feature: Feature;
-      borderColor: BorderColor;
-    }
+    id: string;
+    type: "feature";
+    sectionHeading: string;
+    feature: Feature;
+    borderColor: BorderColor;
+  }
   | {
-      id: string;
-      type: "news";
-      heading: string;
-      items: NewsItem[];
-    };
+    id: string;
+    type: "news";
+    heading: string;
+    items: NewsItem[];
+  };
 
 export interface AEIConnectProps {
   previewText: string;
@@ -406,7 +406,7 @@ export const AEIConnect = ({
           `}</style>
         </Head>
         <Preview>{previewText}</Preview>
-        <Body className="bg-aei-bg font-sans" style={{ margin: "0", padding: "0" }}>
+        <Body className="bg-aei-quartz-gray font-sans" style={{ margin: "0", padding: "0" }}>
           <table
             role="presentation"
             width="100%"
@@ -450,12 +450,12 @@ export const AEIConnect = ({
                     <tr>
                       <td
                         dangerouslySetInnerHTML={{
-                          __html: `<!--[if mso]><v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;height:220px;"><v:fill type="frame" src="${heroImageUrl}" /><v:textbox style="v-text-anchor:middle" inset="0,0,0,0"><![endif]--><div style="background:url(${heroImageUrl}) no-repeat center center / cover;height:220px;"><table role="presentation" width="100%" height="220" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:4px solid #F14326">${issueTitle}</h1></td><td style="width:80px;vertical-align:top;padding:0"><table role="presentation" cellpadding="0" cellspacing="0" width="80" style="border-collapse:collapse"><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #F6F7F5;border-bottom:110px solid transparent"></div></td></tr><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #F14326;border-top:110px solid transparent"></div></td></tr></table></td></tr></table></div><!--[if mso]></v:textbox></v:rect><![endif]-->`,
+                          __html: `<!--[if mso]><v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;height:220px;"><v:fill type="frame" src="${heroImageUrl}" /><v:textbox style="v-text-anchor:middle" inset="0,0,0,0"><![endif]--><div style="background:url(${heroImageUrl}) no-repeat center center / cover;height:220px;"><table role="presentation" width="100%" height="220" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:4px solid #ef4734">${issueTitle}</h1></td><td style="width:80px;vertical-align:top;padding:0"><table role="presentation" cellpadding="0" cellspacing="0" width="80" style="border-collapse:collapse"><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #f5f1ed;border-bottom:110px solid transparent"></div></td></tr><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #ef4734;border-top:110px solid transparent"></div></td></tr></table></td></tr></table></div><!--[if mso]></v:textbox></v:rect><![endif]-->`,
                         }}
                       />
                     </tr>
                   </table>
-                  <Section className="bg-aei-light-warm p-5">
+                  <Section className="bg-aei-light-gray p-5">
                     {introText.split(/\n\n+/).map((paragraph, i) => (
                       <Heading
                         key={i}
@@ -480,7 +480,7 @@ export const AEIConnect = ({
                             borderTop: "0",
                             borderRight: "0",
                             borderLeft: "0",
-                            borderBottom: "1px solid #D4D4C4",
+                            borderBottom: "1px solid #d1ccc1",
                           }}
                         />
                       )}
@@ -490,13 +490,13 @@ export const AEIConnect = ({
                   {/* ----------------------------------------------------------------
               Footer
           ----------------------------------------------------------------- */}
-                  <Section className="footer bg-aei-light-warm">
+                  <Section className="footer bg-aei-light-gray">
                     <Row>
                       <td
                         className="pt-9 pb-8 px-8 text-center"
                         style={{
                           backgroundImage:
-                            "linear-gradient(to top right, #F14326 50%, transparent 50%)",
+                            "linear-gradient(to top right, #ef4734 50%, transparent 50%)",
                           backgroundSize: "110px 110px",
                           backgroundPosition: "bottom left",
                           backgroundRepeat: "no-repeat",
@@ -509,7 +509,7 @@ export const AEIConnect = ({
                           <Link
                             href="#"
                             className="text-aei-black no-underline"
-                            style={{ color: "#282D28", textDecoration: "none", cursor: "default" }}
+                            style={{ color: "#282826", textDecoration: "none", cursor: "default" }}
                           >
                             {footerAddress}
                           </Link>
@@ -522,7 +522,7 @@ export const AEIConnect = ({
                             href={unsubscribeUrl}
                             className="text-aei-black underline"
                             style={{
-                              color: "#282D28",
+                              color: "#282826",
                               display: "inline-block",
                               padding: "4px 4px",
                             }}
@@ -533,7 +533,7 @@ export const AEIConnect = ({
                             href={updateProfileUrl}
                             className="text-aei-black underline"
                             style={{
-                              color: "#282D28",
+                              color: "#282826",
                               display: "inline-block",
                               padding: "4px 4px",
                             }}
@@ -544,7 +544,7 @@ export const AEIConnect = ({
                             href={dataNoticeUrl}
                             className="text-aei-black underline"
                             style={{
-                              color: "#282D28",
+                              color: "#282826",
                               display: "inline-block",
                               padding: "4px 4px",
                             }}
@@ -567,8 +567,8 @@ export const AEIConnect = ({
                     <span
                       dangerouslySetInnerHTML={{
                         __html: `<!--[if mso]>
-<v:shape xmlns:v="urn:schemas-microsoft-com:vml" coordsize="110,110" path="m 0,110 l 110,110 0,0 x e" style="position:absolute;bottom:0;left:0;width:110px;height:110px;" fillcolor="#F14326" stroked="false">
-  <v:fill type="solid" color="#F14326" />
+<v:shape xmlns:v="urn:schemas-microsoft-com:vml" coordsize="110,110" path="m 0,110 l 110,110 0,0 x e" style="position:absolute;bottom:0;left:0;width:110px;height:110px;" fillcolor="#ef4734" stroked="false">
+  <v:fill type="solid" color="#ef4734" />
 </v:shape>
 <![endif]-->`,
                       }}

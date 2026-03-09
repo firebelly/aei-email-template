@@ -6,15 +6,15 @@ export default {
     extend: {
       colors: {
         aei: {
-          red: "#F14326",
-          black: "#282D28",
-          bg: "#D4D4C4",
-          "light-warm": "#F6F7F5",
-          purple: "#8177A5",
-          green: "#86C54C",
-          teal: "#4FC0B8",
-          blue: "#549DC0",
-          yellow: "#FFCD4D",
+          red: "#ef4734",
+          black: "#282826",
+          "quartz-gray": "#d1ccc1",
+          "light-gray": "#f5f1ed",
+          purple: "#8373a5",
+          green: "#8EC150",
+          teal: "#49B7B6",
+          blue: "#5193BF",
+          yellow: "#FCC947",
         },
       },
       fontSize: {
