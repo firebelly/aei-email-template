@@ -64,70 +64,97 @@ const ArticleGrid = ({
     {articles.map((article, i) => {
       const textFirst = startWith === "text" ? i % 2 === 0 : i % 2 !== 0;
       const textCol = (
-        <Column
-          key="text"
-          className={`w-1/2 align-top p-2.5${textFirst ? " bg-aei-light-warm" : ""}`}
-        >
+        <Column key="text" width="50%" className={`w-1/2 align-top${textFirst ? " bg-aei-light-gray" : ""}`}>
           {article.heading && (
-            <Heading as="h3" className="text-h3 text-aei-black mt-0 mb-2">
+            <Heading as="h3" className="text-h3 text-aei-black mt-2.5 mb-2 mx-2.5">
               {article.heading}
             </Heading>
           )}
-          <Text className="text-p text-aei-black my-0">
+          <Text
+            className={`text-p text-aei-black mx-2.5${article.heading ? " mt-0" : " mt-2.5"}${article.readMoreUrl ? " mb-0" : " mb-2.5"}`}
+          >
             {parseLinks(article.description, "text-aei-red underline")}
           </Text>
           {article.readMoreUrl && (
-            <Link href={article.readMoreUrl} className="text-p text-aei-red no-underline">
-              {article.readMoreText ?? "Read More →"}
-            </Link>
+            <Text className={`text-p text-aei-black mt-2 mx-2.5 mb-2.5`}>
+              <Link href={article.readMoreUrl} className="text-p text-aei-red no-underline">
+                {article.readMoreText ?? "Read More →"}
+              </Link>
+            </Text>
           )}
         </Column>
       );
       const imageCol = (
         <td
           key="image"
+          width="50%"
           style={{
             width: "50%",
             verticalAlign: "top",
-            background: `url(${article.imageUrl}) no-repeat center center / cover`,
-            minHeight: "120px",
+            background: `url(${article.imageUrl}) no-repeat center top / cover`,
+            minHeight: "180px",
+            padding: "0",
+            fontSize: "0",
+            lineHeight: "0",
           }}
           dangerouslySetInnerHTML={{
             __html: `
               <!--[if mso]>
-              <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:260px;min-height:120px;">
-                <v:fill type="frame" src="${article.imageUrl}" />
-                <v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0">
+              <img src="${article.imageUrl}" width="278" style="width:278px;display:block;" alt="" />
               <![endif]-->
-              <div style="min-height:120px;font-size:0;line-height:0;">&nbsp;</div>
-              <!--[if mso]>
-                </v:textbox>
-              </v:rect>
-              <![endif]-->
+              <!--[if !mso]><!-->
+              <div style="min-height:180px;font-size:0;line-height:0;">&nbsp;</div>
+              <!--<![endif]-->
             `,
           }}
         />
       );
 
       return (
-        <Section
-          key={i}
-          className={`border-none border-l-[3px] border-solid ${borderColor}${i > 0 ? " mt-5" : ""}`}
-        >
-          <Row>
-            {textFirst ? (
-              <>
-                {textCol}
-                {imageCol}
-              </>
-            ) : (
-              <>
-                {imageCol}
-                {textCol}
-              </>
-            )}
-          </Row>
-        </Section>
+        <React.Fragment key={i}>
+          {i > 0 && (
+            <div style={{ height: "20px", lineHeight: "20px", fontSize: "1px" }}>&nbsp;</div>
+          )}
+          <table
+            role="presentation"
+            width="100%"
+            cellPadding={0}
+            cellSpacing={0}
+            style={{ borderCollapse: "collapse" }}
+          >
+            <tr>
+              <td
+                style={{
+                  width: "3px",
+                  backgroundColor: borderColorMap[borderColor],
+                }}
+              />
+              <td style={{ padding: 0 }}>
+                <table
+                  role="presentation"
+                  width="100%"
+                  cellPadding={0}
+                  cellSpacing={0}
+                  style={{ borderCollapse: "collapse" }}
+                >
+                  <tr>
+                    {textFirst ? (
+                      <>
+                        {textCol}
+                        {imageCol}
+                      </>
+                    ) : (
+                      <>
+                        {imageCol}
+                        {textCol}
+                      </>
+                    )}
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </React.Fragment>
       );
     })}
   </Section>
@@ -166,9 +193,27 @@ const FeatureSection = ({
   <Section className="px-5 py-5">
     <SectionHeading>{sectionHeading}</SectionHeading>
 
-    <Section className={`border-none border-l-[3px] border-solid ${borderColor}`}>
-      <Img src={feature.imageUrl} alt={feature.imageAlt} width="568" className="w-full" />
-    </Section>
+    <table
+      role="presentation"
+      width="100%"
+      border={0}
+      cellPadding={0}
+      cellSpacing={0}
+      style={{ borderCollapse: "collapse" }}
+    >
+      <tr>
+        <td
+          style={{
+            borderLeft: `3px solid ${borderColorMap[borderColor]}`,
+            padding: 0,
+            lineHeight: 0,
+            fontSize: 0,
+          }}
+        >
+          <Img src={feature.imageUrl} alt={feature.imageAlt} width="557" className="w-full" style={{ display: "block" }} />
+        </td>
+      </tr>
+    </table>
 
     <Heading as="h3" className="text-h3 text-aei-black my-3">
       {feature.label && (
@@ -179,22 +224,28 @@ const FeatureSection = ({
       )}
       {feature.title}
     </Heading>
-    <Text className="text-p text-aei-black my-0">{parseLinks(feature.description, "text-aei-red underline")}</Text>
+    <Text className="text-p text-aei-black my-0">
+      {parseLinks(feature.description, "text-aei-red underline")}
+    </Text>
     {feature.ctaStyle === "button" ? (
-      <Button
-        href={feature.ctaUrl}
-        className="bg-aei-red text-white text-p mt-3 py-2.5 px-5 no-underline"
-      >
-        {feature.ctaText}
-      </Button>
+      <Text className="mt-3 mb-0">
+        <Button
+          href={feature.ctaUrl}
+          className="bg-aei-red text-white text-p py-2.5 px-5 no-underline"
+        >
+          {feature.ctaText}
+        </Button>
+      </Text>
     ) : (
-      <Link
-        href={feature.ctaUrl}
-        className="text-p text-aei-red"
-        style={{ textDecoration: "none" }}
-      >
-        {feature.ctaText}
-      </Link>
+      <Text className="mt-1 mb-0">
+        <Link
+          href={feature.ctaUrl}
+          className="text-p text-aei-red"
+          style={{ textDecoration: "none" }}
+        >
+          {feature.ctaText}
+        </Link>
+      </Text>
     )}
   </Section>
 );
@@ -237,28 +288,38 @@ export type BorderColor =
   | "border-l-aei-yellow"
   | "border-l-aei-red";
 
+/** Maps Tailwind border-color class names to hex values for inline styles (Outlook-safe) */
+const borderColorMap: Record<BorderColor, string> = {
+  "border-l-aei-purple": "#8373a5",
+  "border-l-aei-green": "#8EC150",
+  "border-l-aei-teal": "#49B7B6",
+  "border-l-aei-blue": "#5193BF",
+  "border-l-aei-yellow": "#FCC947",
+  "border-l-aei-red": "#ef4734",
+};
+
 export type ContentSection =
   | {
-      id: string;
-      type: "article-grid";
-      heading: string;
-      articles: Article[];
-      borderColor: BorderColor;
-      startWith: "text" | "image";
-    }
+    id: string;
+    type: "article-grid";
+    heading: string;
+    articles: Article[];
+    borderColor: BorderColor;
+    startWith: "text" | "image";
+  }
   | {
-      id: string;
-      type: "feature";
-      sectionHeading: string;
-      feature: Feature;
-      borderColor: BorderColor;
-    }
+    id: string;
+    type: "feature";
+    sectionHeading: string;
+    feature: Feature;
+    borderColor: BorderColor;
+  }
   | {
-      id: string;
-      type: "news";
-      heading: string;
-      items: NewsItem[];
-    };
+    id: string;
+    type: "news";
+    heading: string;
+    items: NewsItem[];
+  };
 
 export interface AEIConnectProps {
   previewText: string;
@@ -309,21 +370,20 @@ export const AEIConnect = ({
           />
         );
       case "news":
-        return (
-          <NewsSection
-            key={section.id}
-            heading={section.heading}
-            items={section.items}
-          />
-        );
+        return <NewsSection key={section.id} heading={section.heading} items={section.items} />;
     }
   });
 
   return (
-    <Html lang="en">
+    <Html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
       <Tailwind config={tailwindConfig}>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <span
+            dangerouslySetInnerHTML={{
+              __html: `<!--[if gte mso 9]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->`,
+            }}
+          />
           <meta
             name="format-detection"
             content="telephone=no, date=no, address=no, email=no, url=no"
@@ -343,11 +403,12 @@ export const AEIConnect = ({
               h3 { font-size: 14px !important; }
               p, a { font-size: 13px !important; }
               .footer p, .footer a { font-size: 12px !important; }
+              h1 { border-left-width: 6px !important; }
             }
           `}</style>
         </Head>
         <Preview>{previewText}</Preview>
-        <Body className="bg-aei-bg font-sans" style={{ margin: "0", padding: "0" }}>
+        <Body className="bg-aei-quartz-gray font-sans" style={{ margin: "0", padding: "0" }}>
           <table
             role="presentation"
             width="100%"
@@ -380,103 +441,62 @@ export const AEIConnect = ({
                   {/* ----------------------------------------------------------------
               Intro — hero image with chevron cutout + intro text
           ----------------------------------------------------------------- */}
-                  <Section>
-                    <Row>
+                  <table
+                    role="presentation"
+                    width="100%"
+                    border={0}
+                    cellPadding={0}
+                    cellSpacing={0}
+                    style={{ borderCollapse: "collapse" }}
+                  >
+                    <tr>
                       <td
-                        style={{
-                          background: `url(${heroImageUrl}) no-repeat center center / cover`,
-                          height: "220px",
+                        dangerouslySetInnerHTML={{
+                          __html: `<!--[if mso]>
+<v:group xmlns:v="urn:schemas-microsoft-com:vml" coordsize="600,220" style="width:600px;height:220px;">
+<v:rect filled="true" stroked="false" style="position:absolute;left:0;top:0;width:600;height:220;"><v:fill type="frame" src="${heroImageUrl}" /></v:rect>
+<v:shape filled="true" stroked="false" coordsize="110,110" style="position:absolute;left:490;top:0;width:110;height:110;" path="m 0,0 l 110,0 110,110 x e"><v:fill color="#f5f1ed" /></v:shape>
+<v:shape filled="true" stroked="false" coordsize="110,110" style="position:absolute;left:490;top:110;width:110;height:110;" path="m 110,0 l 110,110 0,110 x e"><v:fill color="#ef4734" /></v:shape>
+<v:rect filled="false" stroked="false" style="position:absolute;left:0;top:0;width:600;height:220;"><v:textbox style="v-text-anchor:middle" inset="0,0,0,0">
+<table role="presentation" width="100%" height="220" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:6px solid #ef4734">${issueTitle}</h1></td><td style="width:110px"></td></tr></table>
+</v:textbox></v:rect>
+</v:group>
+<![endif]-->
+<!--[if !mso]><!-->
+<div style="background:url(${heroImageUrl}) no-repeat center center / cover;height:220px;"><table role="presentation" width="100%" height="220" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:5px solid #ef4734">${issueTitle}</h1></td><td style="width:80px;vertical-align:top;padding:0"><table role="presentation" cellpadding="0" cellspacing="0" width="80" style="border-collapse:collapse"><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #f5f1ed;border-bottom:110px solid transparent"></div></td></tr><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #ef4734;border-top:110px solid transparent"></div></td></tr></table></td></tr></table></div>
+<!--<![endif]-->`,
                         }}
-                      >
-                        <span
-                          dangerouslySetInnerHTML={{
-                            __html: `<!--[if mso]><v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;"><v:fill type="frame" src="${heroImageUrl}" /><v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0"><![endif]-->`,
-                          }}
-                        />
-                        <table
-                          role="presentation"
-                          width="100%"
-                          cellPadding={0}
-                          cellSpacing={0}
-                          style={{ borderCollapse: "collapse" }}
-                        >
-                          <tr>
-                            {/* Left spacer */}
-                            <td style={{ width: "20px" }} />
-                            {/* Heading with red left border */}
-                            <td
-                              style={{
-                                paddingTop: "24px",
-                                paddingBottom: "24px",
-                                verticalAlign: "middle",
-                              }}
-                            >
-                              <Heading
-                                as="h1"
-                                className="text-h1 text-white m-0 border-0 border-l-4 border-solid border-l-aei-red pl-2"
-                              >
-                                {issueTitle}
-                              </Heading>
-                            </td>
-                            {/* White chevron triangles */}
-                            <td style={{ width: "80px", verticalAlign: "top", padding: "0" }}>
-                              <table
-                                role="presentation"
-                                cellPadding={0}
-                                cellSpacing={0}
-                                width={80}
-                                style={{ borderCollapse: "collapse" }}
-                              >
-                                <tr>
-                                  <td style={{ fontSize: "0", lineHeight: "0" }}>
-                                    <div
-                                      style={{
-                                        width: "0",
-                                        height: "0",
-                                        borderRight: "110px solid #F6F7F5",
-                                        borderBottom: "110px solid transparent",
-                                      }}
-                                    />
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td style={{ fontSize: "0", lineHeight: "0" }}>
-                                    <div
-                                      style={{
-                                        width: "0",
-                                        height: "0",
-                                        borderRight: "110px solid #F14326",
-                                        borderTop: "110px solid transparent",
-                                      }}
-                                    />
-                                  </td>
-                                </tr>
-                              </table>
-                            </td>
-                          </tr>
-                        </table>
-                        <span
-                          dangerouslySetInnerHTML={{
-                            __html: `<!--[if mso]></v:textbox></v:rect><![endif]-->`,
-                          }}
-                        />
-                      </td>
-                    </Row>
-                  </Section>
-                  <Section className="bg-aei-light-warm p-5">
+                      />
+                    </tr>
+                  </table>
+                  <Section className="bg-aei-light-gray p-5">
                     {introText.split(/\n\n+/).map((paragraph, i) => (
-                      <Heading key={i} as="h3" className={`text-h3 text-aei-black m-0${i > 0 ? " mt-3" : ""}`}>{parseLinks(paragraph, "text-aei-red underline")}</Heading>
+                      <Heading
+                        key={i}
+                        as="h3"
+                        className={`text-h3 text-aei-black m-0${i > 0 ? " mt-3" : ""}`}
+                      >
+                        {parseLinks(paragraph, "text-aei-red underline")}
+                      </Heading>
                     ))}
                   </Section>
 
                   {/* ----------------------------------------------------------------
               Content sections with auto bottom borders
           ----------------------------------------------------------------- */}
-                  {contentSections.map((section, i) => (
+                  {contentSections.map((section, i, arr) => (
                     <React.Fragment key={section.key}>
                       {section}
-                      {i < contentSections.length - 1 && (
-                        <Section className="px-5 border-none border-b border-solid border-b-aei-bg" />
+                      {i < arr.length - 1 && (
+                        <Section
+                          className="px-5"
+                          style={{
+                            borderTop: "0",
+                            borderRight: "0",
+                            borderLeft: "0",
+                            borderBottom: "1px solid #d1ccc1",
+                          }}
+                        />
                       )}
                     </React.Fragment>
                   ))}
@@ -484,90 +504,58 @@ export const AEIConnect = ({
                   {/* ----------------------------------------------------------------
               Footer
           ----------------------------------------------------------------- */}
-                  <Section className="footer bg-aei-light-warm">
-                    <Row>
+                  <table
+                    role="presentation"
+                    width="100%"
+                    border={0}
+                    cellPadding={0}
+                    cellSpacing={0}
+                    className="footer"
+                    style={{ borderCollapse: "collapse" }}
+                  >
+                    <tr>
                       <td
-                        className="pt-9 pb-8 px-8 text-center"
-                        style={{
-                          backgroundImage:
-                            "linear-gradient(to top right, #F14326 50%, transparent 50%)",
-                          backgroundSize: "110px 110px",
-                          backgroundPosition: "bottom left",
-                          backgroundRepeat: "no-repeat",
+                        dangerouslySetInnerHTML={{
+                          __html: `<!--[if mso]>
+<v:group xmlns:v="urn:schemas-microsoft-com:vml" coordsize="600,164" style="width:600px;height:164px;">
+<v:rect filled="true" stroked="false" style="position:absolute;left:0;top:0;width:600;height:164;"><v:fill color="#f5f1ed" /></v:rect>
+<v:shape filled="true" stroked="false" coordsize="110,110" style="position:absolute;left:0;top:54;width:110;height:110;" path="m 0,110 l 110,110 0,0 x e"><v:fill color="#ef4734" /></v:shape>
+<v:rect filled="false" stroked="false" style="position:absolute;left:0;top:0;width:600;height:164;"><v:textbox style="v-text-anchor:top" inset="32px,36px,32px,32px">
+<p style="font-size:10px;line-height:1.6;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:12px;text-align:center;">
+<a href="#" style="color:#282826;text-decoration:none;cursor:default;">${footerAddress}</a>
+</p>
+<p style="font-size:10px;line-height:1.4;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:24px;text-align:center;">
+<a href="${unsubscribeUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Unsubscribe</a>
+&nbsp;&nbsp;&nbsp;
+<a href="${updateProfileUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Update Profile</a>
+&nbsp;&nbsp;&nbsp;
+<a href="${dataNoticeUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Constant Contact Data Notice</a>
+</p>
+<p style="margin:0;text-align:center;">
+<a href="https://www.constantcontact.com"><img src="https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/constant-contact-logo.png" alt="Constant Contact" width="110" height="32" style="display:inline-block;" /></a>
+</p>
+</v:textbox></v:rect>
+</v:group>
+<![endif]-->
+<!--[if !mso]><!-->
+<div style="background-color:#f5f1ed;background-image:linear-gradient(to top right, #ef4734 50%, transparent 50%);background-size:110px 110px;background-position:bottom left;background-repeat:no-repeat;padding:36px 32px 32px 32px;text-align:center;">
+<p style="font-size:10px;line-height:1.6;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:12px;">
+<a href="#" style="color:#282826;text-decoration:none;cursor:default;">${footerAddress}</a>
+</p>
+<p style="font-size:10px;line-height:1.4;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:24px;">
+<a href="${unsubscribeUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Unsubscribe</a>
+<a href="${updateProfileUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Update Profile</a>
+<a href="${dataNoticeUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Constant Contact Data Notice</a>
+</p>
+<p style="margin:0;">
+<a href="https://www.constantcontact.com"><img src="https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/constant-contact-logo.png" alt="Constant Contact" width="110" height="32" style="display:inline-block;" /></a>
+</p>
+</div>
+<!--<![endif]-->`,
                         }}
-                      >
-                        <Text
-                          className="text-p-small text-aei-black m-0 mb-3"
-                          style={{ lineHeight: "1.6" }}
-                        >
-                          <Link
-                            href="#"
-                            className="text-aei-black no-underline"
-                            style={{ color: "#282D28", textDecoration: "none", cursor: "default" }}
-                          >
-                            {footerAddress}
-                          </Link>
-                        </Text>
-                        <Text
-                          className="text-p-small text-aei-black m-0 mb-6"
-                          style={{ lineHeight: "1.4" }}
-                        >
-                          <Link
-                            href={unsubscribeUrl}
-                            className="text-aei-black underline"
-                            style={{
-                              color: "#282D28",
-                              display: "inline-block",
-                              padding: "4px 4px",
-                            }}
-                          >
-                            Unsubscribe
-                          </Link>
-                          <Link
-                            href={updateProfileUrl}
-                            className="text-aei-black underline"
-                            style={{
-                              color: "#282D28",
-                              display: "inline-block",
-                              padding: "4px 4px",
-                            }}
-                          >
-                            Update Profile
-                          </Link>
-                          <Link
-                            href={dataNoticeUrl}
-                            className="text-aei-black underline"
-                            style={{
-                              color: "#282D28",
-                              display: "inline-block",
-                              padding: "4px 4px",
-                            }}
-                          >
-                            Constant Contact Data Notice
-                          </Link>
-                        </Text>
-                        <Link href="https://www.constantcontact.com">
-                          <Img
-                            src="https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/constant-contact-logo.png"
-                            alt="Constant Contact"
-                            width="110"
-                            height="32"
-                            className="inline-block"
-                          />
-                        </Link>
-                      </td>
-                    </Row>
-                    {/* Red triangle in bottom-left corner — VML for Outlook */}
-                    <span
-                      dangerouslySetInnerHTML={{
-                        __html: `<!--[if mso]>
-<v:shape xmlns:v="urn:schemas-microsoft-com:vml" coordsize="110,110" path="m 0,110 l 110,110 0,0 x e" style="position:absolute;bottom:0;left:0;width:110px;height:110px;" fillcolor="#F14326" stroked="false">
-  <v:fill type="solid" color="#F14326" />
-</v:shape>
-<![endif]-->`,
-                      }}
-                    />
-                  </Section>
+                      />
+                    </tr>
+                  </table>
                 </Container>
               </td>
             </tr>
@@ -586,7 +574,7 @@ export const defaultProps: AEIConnectProps = {
   previewText: "AEI Connect — insights, innovations, and news from across our teams.",
   issueTitle: "AEI Connect",
   heroImageUrl:
-    "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/hero.png",
+    "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/outlook-fixes/emails/static/hero--cropped.png",
   introText:
     "Welcome to this month\u2019s edition of AEI Connect\u2014a curated roundup of insights, innovations, and news from across our teams. Explore what\u2019s new, what\u2019s next, and how we\u2019re designing smarter together.",
 
@@ -605,7 +593,7 @@ export const defaultProps: AEIConnectProps = {
           readMoreUrl: "https://aeieng.com",
           readMoreText: "Read More \u2192",
           imageUrl:
-            "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/fresh-perspectives.png",
+            "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/outlook-fixes/emails/static/fresh-perspectives.png",
           imageAlt: "Fresh perspectives from our experts",
         },
         {

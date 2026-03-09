@@ -6,7 +6,7 @@
 
 :root {
   --sidebar-width: 420px;
-  --aei-red: #f14326;
+  --aei-red: #ef4734;
   --aei-black: #282d28;
   --aei-bg: #d4d4c4;
   --aei-light: #f6f7f5;
@@ -102,7 +102,7 @@ summary:hover {
   background: rgba(0, 0, 0, 0.03);
 }
 
-details > .section-content {
+details>.section-content {
   padding: 8px 12px 12px;
 }
 
