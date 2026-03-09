@@ -91,8 +91,8 @@ const ArticleGrid = ({
           style={{
             width: "50%",
             verticalAlign: "top",
-            background: `url(${article.imageUrl}) no-repeat center center / cover`,
-            minHeight: "120px",
+            background: `url(${article.imageUrl}) no-repeat center top / cover`,
+            minHeight: "180px",
             padding: "0",
             fontSize: "0",
             lineHeight: "0",
@@ -103,7 +103,7 @@ const ArticleGrid = ({
               <img src="${article.imageUrl}" width="278" style="width:278px;display:block;" alt="" />
               <![endif]-->
               <!--[if !mso]><!-->
-              <div style="min-height:120px;font-size:0;line-height:0;">&nbsp;</div>
+              <div style="min-height:180px;font-size:0;line-height:0;">&nbsp;</div>
               <!--<![endif]-->
             `,
           }}
@@ -451,7 +451,19 @@ export const AEIConnect = ({
                     <tr>
                       <td
                         dangerouslySetInnerHTML={{
-                          __html: `<!--[if mso]><v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;height:220px;"><v:fill type="frame" src="${heroImageUrl}" /><v:textbox style="v-text-anchor:middle" inset="0,0,0,0"><![endif]--><div style="background:url(${heroImageUrl}) no-repeat center center / cover;height:220px;"><table role="presentation" width="100%" height="220" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:4px solid #ef4734">${issueTitle}</h1></td><td style="width:80px;vertical-align:top;padding:0"><table role="presentation" cellpadding="0" cellspacing="0" width="80" style="border-collapse:collapse"><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #f5f1ed;border-bottom:110px solid transparent"></div></td></tr><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #ef4734;border-top:110px solid transparent"></div></td></tr></table></td></tr></table></div><!--[if mso]></v:textbox></v:rect><![endif]-->`,
+                          __html: `<!--[if mso]>
+<v:group xmlns:v="urn:schemas-microsoft-com:vml" coordsize="600,220" style="width:600px;height:220px;">
+<v:rect filled="true" stroked="false" style="position:absolute;left:0;top:0;width:600;height:220;"><v:fill type="frame" src="${heroImageUrl}" /></v:rect>
+<v:shape filled="true" stroked="false" coordsize="110,110" style="position:absolute;left:490;top:0;width:110;height:110;" path="m 0,0 l 110,0 110,110 x e"><v:fill color="#f5f1ed" /></v:shape>
+<v:shape filled="true" stroked="false" coordsize="110,110" style="position:absolute;left:490;top:110;width:110;height:110;" path="m 110,0 l 110,110 0,110 x e"><v:fill color="#ef4734" /></v:shape>
+<v:rect filled="false" stroked="false" style="position:absolute;left:0;top:0;width:600;height:220;"><v:textbox style="v-text-anchor:middle" inset="0,0,0,0">
+<table role="presentation" width="100%" height="220" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:4px solid #ef4734">${issueTitle}</h1></td><td style="width:110px"></td></tr></table>
+</v:textbox></v:rect>
+</v:group>
+<![endif]-->
+<!--[if !mso]><!-->
+<div style="background:url(${heroImageUrl}) no-repeat center center / cover;height:220px;"><table role="presentation" width="100%" height="220" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:4px solid #ef4734">${issueTitle}</h1></td><td style="width:80px;vertical-align:top;padding:0"><table role="presentation" cellpadding="0" cellspacing="0" width="80" style="border-collapse:collapse"><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #f5f1ed;border-bottom:110px solid transparent"></div></td></tr><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #ef4734;border-top:110px solid transparent"></div></td></tr></table></td></tr></table></div>
+<!--<![endif]-->`,
                         }}
                       />
                     </tr>
