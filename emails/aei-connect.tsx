@@ -503,94 +503,58 @@ export const AEIConnect = ({
                   {/* ----------------------------------------------------------------
               Footer
           ----------------------------------------------------------------- */}
-                  <Section className="footer bg-aei-light-gray">
-                    <Row>
+                  <table
+                    role="presentation"
+                    width="100%"
+                    border={0}
+                    cellPadding={0}
+                    cellSpacing={0}
+                    className="footer"
+                    style={{ borderCollapse: "collapse" }}
+                  >
+                    <tr>
                       <td
-                        className="pt-9 pb-8 px-8 text-center"
-                        style={{
-                          backgroundImage:
-                            "linear-gradient(to top right, #ef4734 50%, transparent 50%)",
-                          backgroundSize: "110px 110px",
-                          backgroundPosition: "bottom left",
-                          backgroundRepeat: "no-repeat",
+                        dangerouslySetInnerHTML={{
+                          __html: `<!--[if mso]>
+<v:group xmlns:v="urn:schemas-microsoft-com:vml" coordsize="600,164" style="width:600px;height:164px;">
+<v:rect filled="true" stroked="false" style="position:absolute;left:0;top:0;width:600;height:164;"><v:fill color="#f5f1ed" /></v:rect>
+<v:shape filled="true" stroked="false" coordsize="110,110" style="position:absolute;left:0;top:54;width:110;height:110;" path="m 0,110 l 110,110 0,0 x e"><v:fill color="#ef4734" /></v:shape>
+<v:rect filled="false" stroked="false" style="position:absolute;left:0;top:0;width:600;height:164;"><v:textbox style="v-text-anchor:top" inset="32px,36px,32px,32px">
+<p style="font-size:10px;line-height:1.6;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:12px;text-align:center;">
+<a href="#" style="color:#282826;text-decoration:none;cursor:default;">${footerAddress}</a>
+</p>
+<p style="font-size:10px;line-height:1.4;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:24px;text-align:center;">
+<a href="${unsubscribeUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Unsubscribe</a>
+&nbsp;&nbsp;&nbsp;
+<a href="${updateProfileUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Update Profile</a>
+&nbsp;&nbsp;&nbsp;
+<a href="${dataNoticeUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Constant Contact Data Notice</a>
+</p>
+<p style="margin:0;text-align:center;">
+<a href="https://www.constantcontact.com"><img src="https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/constant-contact-logo.png" alt="Constant Contact" width="110" height="32" style="display:inline-block;" /></a>
+</p>
+</v:textbox></v:rect>
+</v:group>
+<![endif]-->
+<!--[if !mso]><!-->
+<div style="background-color:#f5f1ed;background-image:linear-gradient(to top right, #ef4734 50%, transparent 50%);background-size:110px 110px;background-position:bottom left;background-repeat:no-repeat;padding:36px 32px 32px 32px;text-align:center;">
+<p style="font-size:10px;line-height:1.6;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:12px;">
+<a href="#" style="color:#282826;text-decoration:none;cursor:default;">${footerAddress}</a>
+</p>
+<p style="font-size:10px;line-height:1.4;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:24px;">
+<a href="${unsubscribeUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Unsubscribe</a>
+<a href="${updateProfileUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Update Profile</a>
+<a href="${dataNoticeUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Constant Contact Data Notice</a>
+</p>
+<p style="margin:0;">
+<a href="https://www.constantcontact.com"><img src="https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/constant-contact-logo.png" alt="Constant Contact" width="110" height="32" style="display:inline-block;" /></a>
+</p>
+</div>
+<!--<![endif]-->`,
                         }}
-                      >
-                        <Text
-                          className="text-p-small text-aei-black m-0 mb-3"
-                          style={{ lineHeight: "1.6" }}
-                        >
-                          <Link
-                            href="#"
-                            className="text-aei-black no-underline"
-                            style={{ color: "#282826", textDecoration: "none", cursor: "default" }}
-                          >
-                            {footerAddress}
-                          </Link>
-                        </Text>
-                        <Text
-                          className="text-p-small text-aei-black m-0 mb-6"
-                          style={{ lineHeight: "1.4" }}
-                        >
-                          <Link
-                            href={unsubscribeUrl}
-                            className="text-aei-black underline"
-                            style={{
-                              color: "#282826",
-                              display: "inline-block",
-                              padding: "4px 4px",
-                            }}
-                          >
-                            Unsubscribe
-                          </Link>
-                          {" "}
-                          <span dangerouslySetInnerHTML={{ __html: "<!--[if mso]>&nbsp;&nbsp;&nbsp;<![endif]-->" }} />
-                          <Link
-                            href={updateProfileUrl}
-                            className="text-aei-black underline"
-                            style={{
-                              color: "#282826",
-                              display: "inline-block",
-                              padding: "4px 4px",
-                            }}
-                          >
-                            Update Profile
-                          </Link>
-                          {" "}
-                          <span dangerouslySetInnerHTML={{ __html: "<!--[if mso]>&nbsp;&nbsp;&nbsp;<![endif]-->" }} />
-                          <Link
-                            href={dataNoticeUrl}
-                            className="text-aei-black underline"
-                            style={{
-                              color: "#282826",
-                              display: "inline-block",
-                              padding: "4px 4px",
-                            }}
-                          >
-                            Constant Contact Data Notice
-                          </Link>
-                        </Text>
-                        <Link href="https://www.constantcontact.com">
-                          <Img
-                            src="https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/constant-contact-logo.png"
-                            alt="Constant Contact"
-                            width="110"
-                            height="32"
-                            className="inline-block"
-                          />
-                        </Link>
-                      </td>
-                    </Row>
-                    {/* Red triangle in bottom-left corner — VML for Outlook */}
-                    <span
-                      dangerouslySetInnerHTML={{
-                        __html: `<!--[if mso]>
-<v:shape xmlns:v="urn:schemas-microsoft-com:vml" coordsize="110,110" path="m 0,110 l 110,110 0,0 x e" style="position:absolute;bottom:0;left:0;width:110px;height:110px;" fillcolor="#ef4734" stroked="false">
-  <v:fill type="solid" color="#ef4734" />
-</v:shape>
-<![endif]-->`,
-                      }}
-                    />
-                  </Section>
+                      />
+                    </tr>
+                  </table>
                 </Container>
               </td>
             </tr>
