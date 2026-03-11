@@ -64,7 +64,13 @@ const ArticleGrid = ({
     {articles.map((article, i) => {
       const textFirst = startWith === "text" ? i % 2 === 0 : i % 2 !== 0;
       const textCol = (
-        <Column key="text" width="50%" className={`w-1/2 align-top${textFirst ? " bg-aei-light-gray" : ""}`}>
+        <td
+          key="text"
+          width="50%"
+          dir="ltr"
+          className="article-col article-text w-1/2 align-top bg-aei-light-gray"
+          style={{ width: "50%", verticalAlign: "top" }}
+        >
           {article.heading && (
             <Heading as="h3" className="text-h3 text-aei-black mt-2.5 mb-2 mx-2.5">
               {article.heading}
@@ -82,12 +88,14 @@ const ArticleGrid = ({
               </Link>
             </Text>
           )}
-        </Column>
+        </td>
       );
       const imageCol = (
         <td
           key="image"
           width="50%"
+          dir="ltr"
+          className="article-col article-img"
           style={{
             width: "50%",
             verticalAlign: "top",
@@ -96,6 +104,8 @@ const ArticleGrid = ({
             padding: "0",
             fontSize: "0",
             lineHeight: "0",
+            borderLeftColor: borderColorMap[borderColor],
+            borderLeftStyle: "none",
           }}
           dangerouslySetInnerHTML={{
             __html: `
@@ -124,6 +134,7 @@ const ArticleGrid = ({
           >
             <tr>
               <td
+                className="article-border"
                 style={{
                   width: "3px",
                   backgroundColor: borderColorMap[borderColor],
@@ -135,20 +146,12 @@ const ArticleGrid = ({
                   width="100%"
                   cellPadding={0}
                   cellSpacing={0}
+                  dir={textFirst ? "rtl" : "ltr"}
                   style={{ borderCollapse: "collapse" }}
                 >
                   <tr>
-                    {textFirst ? (
-                      <>
-                        {textCol}
-                        {imageCol}
-                      </>
-                    ) : (
-                      <>
-                        {imageCol}
-                        {textCol}
-                      </>
-                    )}
+                    {imageCol}
+                    {textCol}
                   </tr>
                 </table>
               </td>
@@ -404,6 +407,24 @@ export const AEIConnect = ({
               p, a { font-size: 13px !important; }
               .footer p, .footer a { font-size: 12px !important; }
               h1 { border-left-width: 6px !important; }
+            }
+            @media screen and (max-width: 599px) {
+              .article-col {
+                display: block !important;
+                width: 100% !important;
+                direction: ltr !important;
+              }
+              .article-border {
+                display: none !important;
+              }
+              .article-img {
+                border-left-width: 3px !important;
+                border-left-style: solid !important;
+                box-sizing: border-box !important;
+              }
+              .article-text {
+                overflow: hidden !important;
+              }
             }
           `}</style>
         </Head>
