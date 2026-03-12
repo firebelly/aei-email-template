@@ -382,6 +382,8 @@ export const AEIConnect = ({
       <Tailwind config={tailwindConfig}>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <meta name="color-scheme" content="light only" />
+          <meta name="supported-color-modes" content="light" />
           <span
             dangerouslySetInnerHTML={{
               __html: `<!--[if gte mso 9]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->`,
@@ -426,6 +428,7 @@ export const AEIConnect = ({
                 overflow: hidden !important;
               }
             }
+
           `}</style>
         </Head>
         <Preview>{previewText}</Preview>
