@@ -19,10 +19,10 @@ export default {
       },
       fontSize: {
         h1: ["32px", { lineHeight: "1", fontWeight: "700" }],
-        h2: ["14px", { lineHeight: "1", fontWeight: "700" }],
-        h3: ["12px", { lineHeight: "1.3", fontWeight: "400" }],
-        p: ["11px", { lineHeight: "1.3", fontWeight: "400" }],
-        "p-small": ["10px", { lineHeight: "1.2", fontWeight: "400" }],
+        h2: ["15px", { lineHeight: "1", fontWeight: "700" }],
+        h3: ["14px", { lineHeight: "1.3", fontWeight: "400" }],
+        p: ["13px", { lineHeight: "1.4", fontWeight: "400" }],
+        "p-small": ["11px", { lineHeight: "1.2", fontWeight: "400" }],
       },
       fontFamily: {
         sans: ["Arial", "Helvetica Neue", "Helvetica", "sans-serif"],

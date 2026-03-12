@@ -68,7 +68,7 @@ const ArticleGrid = ({
           key="text"
           width="50%"
           dir="ltr"
-          className="article-col article-text w-1/2 align-top bg-aei-light-gray"
+          className={`article-col article-text w-1/2 align-top${i % 2 === 0 ? " bg-aei-light-gray" : ""}`}
           style={{ width: "50%", verticalAlign: "top" }}
         >
           {article.heading && (
@@ -403,8 +403,8 @@ export const AEIConnect = ({
             @media screen and (min-width: 600px) {
               h1 { font-size: 42px !important; }
               h2 { font-size: 17px !important; }
-              h3 { font-size: 14px !important; }
-              p, a { font-size: 13px !important; }
+              h3 { font-size: 15px !important; }
+              p, a { font-size: 14px !important; }
               .footer p, .footer a { font-size: 12px !important; }
               h1 { border-left-width: 6px !important; }
             }
@@ -474,17 +474,17 @@ export const AEIConnect = ({
                       <td
                         dangerouslySetInnerHTML={{
                           __html: `<!--[if mso]>
-<v:group xmlns:v="urn:schemas-microsoft-com:vml" coordsize="600,220" style="width:600px;height:220px;">
-<v:rect filled="true" stroked="false" style="position:absolute;left:0;top:0;width:600;height:220;"><v:fill type="frame" src="${heroImageUrl}" /></v:rect>
+<v:group xmlns:v="urn:schemas-microsoft-com:vml" coordsize="600,360" style="width:600px;height:360px;">
+<v:rect filled="true" stroked="false" style="position:absolute;left:0;top:0;width:600;height:360;"><v:fill type="frame" src="${heroImageUrl}" /></v:rect>
 <v:shape filled="true" stroked="false" coordsize="110,110" style="position:absolute;left:490;top:0;width:110;height:110;" path="m 0,0 l 110,0 110,110 x e"><v:fill color="#f5f1ed" /></v:shape>
 <v:shape filled="true" stroked="false" coordsize="110,110" style="position:absolute;left:490;top:110;width:110;height:110;" path="m 110,0 l 110,110 0,110 x e"><v:fill color="#ef4734" /></v:shape>
-<v:rect filled="false" stroked="false" style="position:absolute;left:0;top:0;width:600;height:220;"><v:textbox style="v-text-anchor:middle" inset="0,0,0,0">
-<table role="presentation" width="100%" height="220" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:6px solid #ef4734">${issueTitle}</h1></td><td style="width:110px"></td></tr></table>
+<v:rect filled="false" stroked="false" style="position:absolute;left:0;top:0;width:600;height:360;"><v:textbox style="v-text-anchor:middle" inset="0,0,0,0">
+<table role="presentation" width="100%" height="360" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:6px solid #ef4734">${issueTitle}</h1></td><td style="width:110px"></td></tr></table>
 </v:textbox></v:rect>
 </v:group>
 <![endif]-->
 <!--[if !mso]><!-->
-<div style="background:url(${heroImageUrl}) no-repeat center center / cover;height:220px;"><table role="presentation" width="100%" height="220" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:5px solid #ef4734">${issueTitle}</h1></td><td style="width:80px;vertical-align:top;padding:0"><table role="presentation" cellpadding="0" cellspacing="0" width="80" style="border-collapse:collapse"><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #f5f1ed;border-bottom:110px solid transparent"></div></td></tr><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #ef4734;border-top:110px solid transparent"></div></td></tr></table></td></tr></table></div>
+<div style="background:url(${heroImageUrl}) no-repeat center center / cover;height:360px;"><table role="presentation" width="100%" height="360" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:5px solid #ef4734">${issueTitle}</h1></td><td style="width:80px;vertical-align:top;padding:0"><table role="presentation" cellpadding="0" cellspacing="0" width="80" style="border-collapse:collapse"><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #f5f1ed;border-bottom:110px solid transparent"></div></td></tr><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:110px solid #ef4734;border-top:110px solid transparent"></div></td></tr></table></td></tr></table></div>
 <!--<![endif]-->`,
                         }}
                       />
@@ -542,10 +542,10 @@ export const AEIConnect = ({
 <v:rect filled="true" stroked="false" style="position:absolute;left:0;top:0;width:600;height:164;"><v:fill color="#f5f1ed" /></v:rect>
 <v:shape filled="true" stroked="false" coordsize="110,110" style="position:absolute;left:0;top:54;width:110;height:110;" path="m 0,110 l 110,110 0,0 x e"><v:fill color="#ef4734" /></v:shape>
 <v:rect filled="false" stroked="false" style="position:absolute;left:0;top:0;width:600;height:164;"><v:textbox style="v-text-anchor:top" inset="32px,36px,32px,32px">
-<p style="font-size:10px;line-height:1.6;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:12px;text-align:center;">
+<p style="font-size:11px;line-height:1.6;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:12px;text-align:center;">
 <a href="#" style="color:#282826;text-decoration:none;cursor:default;">${footerAddress}</a>
 </p>
-<p style="font-size:10px;line-height:1.4;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:24px;text-align:center;">
+<p style="font-size:11px;line-height:1.4;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:24px;text-align:center;">
 <a href="${unsubscribeUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Unsubscribe</a>
 &nbsp;&nbsp;&nbsp;
 <a href="${updateProfileUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Update Profile</a>
@@ -560,10 +560,10 @@ export const AEIConnect = ({
 <![endif]-->
 <!--[if !mso]><!-->
 <div style="background-color:#f5f1ed;background-image:linear-gradient(to top right, #ef4734 50%, transparent 50%);background-size:110px 110px;background-position:bottom left;background-repeat:no-repeat;padding:36px 32px 32px 32px;text-align:center;">
-<p style="font-size:10px;line-height:1.6;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:12px;">
+<p style="font-size:11px;line-height:1.6;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:12px;">
 <a href="#" style="color:#282826;text-decoration:none;cursor:default;">${footerAddress}</a>
 </p>
-<p style="font-size:10px;line-height:1.4;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:24px;">
+<p style="font-size:11px;line-height:1.4;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:24px;">
 <a href="${unsubscribeUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Unsubscribe</a>
 <a href="${updateProfileUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Update Profile</a>
 <a href="${dataNoticeUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Constant Contact Data Notice</a>
@@ -595,7 +595,7 @@ export const defaultProps: AEIConnectProps = {
   previewText: "AEI Connect — insights, innovations, and news from across our teams.",
   issueTitle: "AEI Connect",
   heroImageUrl:
-    "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/outlook-fixes/emails/static/hero--cropped.png",
+    "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/hero.png",
   introText:
     "Welcome to this month\u2019s edition of AEI Connect\u2014a curated roundup of insights, innovations, and news from across our teams. Explore what\u2019s new, what\u2019s next, and how we\u2019re designing smarter together.",
 
