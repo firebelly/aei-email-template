@@ -427,6 +427,26 @@ export const AEIConnect = ({
               .article-text {
                 overflow: hidden !important;
               }
+              .hero {
+                height: 220px !important;
+              }
+              .hero-table {
+                height: 220px !important;
+              }
+              .hero-tri-top {
+                border-right-width: 110px !important;
+                border-bottom-width: 110px !important;
+              }
+              .hero-tri-bottom {
+                border-right-width: 110px !important;
+                border-top-width: 110px !important;
+              }
+              .hero-tri-cell {
+                width: 110px !important;
+              }
+              .hero-tri-table {
+                width: 110px !important;
+              }
             }
 
           `}</style>
@@ -487,7 +507,7 @@ export const AEIConnect = ({
 </v:group>
 <![endif]-->
 <!--[if !mso]><!-->
-<div style="background:url(${heroImageUrl}) no-repeat center center / cover;height:360px;"><table role="presentation" width="100%" height="360" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:5px solid #ef4734">${issueTitle}</h1></td><td style="width:130px;vertical-align:top;padding:0"><table role="presentation" cellpadding="0" cellspacing="0" width="130" style="border-collapse:collapse"><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:180px solid #f5f1ed;border-bottom:180px solid transparent"></div></td></tr><tr><td style="font-size:0;line-height:0"><div style="width:0;height:0;border-right:180px solid #ef4734;border-top:180px solid transparent"></div></td></tr></table></td></tr></table></div>
+<div class="hero" style="background:url(${heroImageUrl}) no-repeat center center / cover;height:360px;"><table class="hero-table" role="presentation" width="100%" height="360" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:5px solid #ef4734">${issueTitle}</h1></td><td class="hero-tri-cell" style="width:130px;vertical-align:top;padding:0"><table class="hero-tri-table" role="presentation" cellpadding="0" cellspacing="0" width="130" style="border-collapse:collapse"><tr><td style="font-size:0;line-height:0"><div class="hero-tri-top" style="width:0;height:0;border-right:180px solid #f5f1ed;border-bottom:180px solid transparent"></div></td></tr><tr><td style="font-size:0;line-height:0"><div class="hero-tri-bottom" style="width:0;height:0;border-right:180px solid #ef4734;border-top:180px solid transparent"></div></td></tr></table></td></tr></table></div>
 <!--<![endif]-->`,
                         }}
                       />
@@ -562,7 +582,9 @@ export const AEIConnect = ({
 </v:group>
 <![endif]-->
 <!--[if !mso]><!-->
-<div style="background-color:#f5f1ed;background-image:linear-gradient(to top right, #ef4734 50%, transparent 50%);background-size:110px 110px;background-position:bottom left;background-repeat:no-repeat;padding:36px 32px 32px 32px;text-align:center;">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+<tr>
+<td background="https://raw.githubusercontent.com/firebelly/aei-email-template/040eb9ff48e4dd69033b3ced63c2f9f31b9d1fda/emails/static/footer-triangle.png" style="background:url('https://raw.githubusercontent.com/firebelly/aei-email-template/040eb9ff48e4dd69033b3ced63c2f9f31b9d1fda/emails/static/footer-triangle.png') bottom left / 110px 110px no-repeat #f5f1ed;padding:36px 32px 32px 32px;text-align:center;">
 <p style="font-size:11px;line-height:1.6;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:12px;">
 <a href="#" style="color:#282826;text-decoration:none;cursor:default;">${footerAddress}</a>
 </p>
@@ -574,7 +596,9 @@ export const AEIConnect = ({
 <p style="margin:0;">
 <a href="https://www.constantcontact.com"><img src="https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/constant-contact-logo.png" alt="Constant Contact" width="110" height="32" style="display:inline-block;" /></a>
 </p>
-</div>
+</td>
+</tr>
+</table>
 <!--<![endif]-->`,
                         }}
                       />
