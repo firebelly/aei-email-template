@@ -6,8 +6,8 @@ export function getValidationErrors(props: AEIConnectProps): string[] {
 
   // Hero / intro fields (all marked required in EditorForm)
   if (!props.previewText?.trim()) errors.push("Preview text is required");
-  if (!props.issueTitle?.trim()) errors.push("Issue title is required");
   if (!props.heroImageUrl?.trim()) errors.push("Hero image URL is required");
+  if (!props.mobileHeroImageUrl?.trim()) errors.push("Mobile hero image URL is required");
   if (!props.introText?.trim()) errors.push("Intro text is required");
 
   props.sections.forEach((section, si) => {

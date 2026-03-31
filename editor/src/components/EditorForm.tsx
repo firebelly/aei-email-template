@@ -23,8 +23,8 @@ export function EditorForm({
 }) {
   const heroMissing =
     !props.previewText.trim() ||
-    !props.issueTitle.trim() ||
     !props.heroImageUrl.trim() ||
+    !props.mobileHeroImageUrl.trim() ||
     !props.introText.trim();
 
   return (
@@ -40,15 +40,15 @@ export function EditorForm({
             required
           />
           <TextField
-            label="Issue Title"
-            value={props.issueTitle}
-            onChange={(v) => updateProps("issueTitle", v)}
+            label="Hero Image URL (Desktop)"
+            value={props.heroImageUrl}
+            onChange={(v) => updateProps("heroImageUrl", v)}
             required
           />
           <TextField
-            label="Hero Image URL"
-            value={props.heroImageUrl}
-            onChange={(v) => updateProps("heroImageUrl", v)}
+            label="Hero Image URL (Mobile)"
+            value={props.mobileHeroImageUrl}
+            onChange={(v) => updateProps("mobileHeroImageUrl", v)}
             required
           />
           <TextAreaField
