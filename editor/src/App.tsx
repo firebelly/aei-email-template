@@ -6,6 +6,7 @@ import { PreviewPane } from "./components/PreviewPane";
 import { ExportButton } from "./components/ExportButton";
 
 export function App() {
+  const [previewMode, setPreviewMode] = useState<"desktop" | "mobile">("desktop");
   const [props, setProps] = useState<AEIConnectProps>(() => ({
     ...defaultProps,
   }));
@@ -64,7 +65,23 @@ export function App() {
     <div className="app">
       <header className="app-header">
         <h1>AEI Connect Editor</h1>
-        <ExportButton props={props} />
+        <div className="header-controls">
+          <div className="preview-toggle">
+            <button
+              className={`btn-toggle ${previewMode === "desktop" ? "active" : ""}`}
+              onClick={() => setPreviewMode("desktop")}
+            >
+              Desktop
+            </button>
+            <button
+              className={`btn-toggle ${previewMode === "mobile" ? "active" : ""}`}
+              onClick={() => setPreviewMode("mobile")}
+            >
+              Mobile
+            </button>
+          </div>
+          <ExportButton props={props} />
+        </div>
       </header>
       <aside className="sidebar">
         <EditorForm
@@ -77,7 +94,7 @@ export function App() {
         />
       </aside>
       <main className="preview">
-        <PreviewPane props={props} />
+        <PreviewPane props={props} previewMode={previewMode} />
       </main>
     </div>
   );

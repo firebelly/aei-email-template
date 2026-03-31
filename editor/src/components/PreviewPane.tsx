@@ -2,7 +2,13 @@ import type { AEIConnectProps } from "@emails/aei-connect";
 import { useEmailRender } from "../hooks/useEmailRender";
 import { getValidationErrors } from "../utils/validation";
 
-export function PreviewPane({ props }: { props: AEIConnectProps }) {
+export function PreviewPane({
+  props,
+  previewMode,
+}: {
+  props: AEIConnectProps;
+  previewMode: "desktop" | "mobile";
+}) {
   const html = useEmailRender(props);
   const errors = getValidationErrors(props);
 
@@ -18,7 +24,11 @@ export function PreviewPane({ props }: { props: AEIConnectProps }) {
           </ul>
         </div>
       )}
-      <iframe srcDoc={html || "<p>Rendering...</p>"} title="Email preview" />
+      <iframe
+        className={previewMode === "mobile" ? "preview-mobile" : undefined}
+        srcDoc={html || "<p>Rendering...</p>"}
+        title="Email preview"
+      />
     </div>
   );
 }
