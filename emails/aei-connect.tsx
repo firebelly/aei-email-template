@@ -326,8 +326,8 @@ export type ContentSection =
 
 export interface AEIConnectProps {
   previewText: string;
-  issueTitle: string;
   heroImageUrl: string;
+  mobileHeroImageUrl: string;
   introText: string;
   sections: ContentSection[];
   footerAddress: string;
@@ -342,8 +342,8 @@ export interface AEIConnectProps {
 
 export const AEIConnect = ({
   previewText = defaultProps.previewText,
-  issueTitle = defaultProps.issueTitle,
   heroImageUrl = defaultProps.heroImageUrl,
+  mobileHeroImageUrl = defaultProps.mobileHeroImageUrl,
   introText = defaultProps.introText,
   sections = defaultProps.sections,
   footerAddress = defaultProps.footerAddress,
@@ -427,25 +427,16 @@ export const AEIConnect = ({
               .article-text {
                 overflow: hidden !important;
               }
-              .hero {
-                height: 220px !important;
+            }
+            @media screen and (max-width: 420px) {
+              .hero-desktop {
+                display: none !important;
+                max-height: 0 !important;
+                overflow: hidden !important;
               }
-              .hero-table {
-                height: 220px !important;
-              }
-              .hero-tri-top {
-                border-right-width: 110px !important;
-                border-bottom-width: 110px !important;
-              }
-              .hero-tri-bottom {
-                border-right-width: 110px !important;
-                border-top-width: 110px !important;
-              }
-              .hero-tri-cell {
-                width: 110px !important;
-              }
-              .hero-tri-table {
-                width: 110px !important;
+              .hero-mobile {
+                display: block !important;
+                max-height: none !important;
               }
             }
 
@@ -483,36 +474,22 @@ export const AEIConnect = ({
                   </Section>
 
                   {/* ----------------------------------------------------------------
-              Intro — hero image with chevron cutout + intro text
+              Intro — hero image + intro text
           ----------------------------------------------------------------- */}
-                  <table
-                    role="presentation"
-                    width="100%"
-                    border={0}
-                    cellPadding={0}
-                    cellSpacing={0}
-                    style={{ borderCollapse: "collapse" }}
-                  >
-                    <tr>
-                      <td
-                        dangerouslySetInnerHTML={{
-                          __html: `<!--[if mso]>
-<v:group xmlns:v="urn:schemas-microsoft-com:vml" coordsize="600,360" style="width:600px;height:360px;">
-<v:rect filled="true" stroked="false" style="position:absolute;left:0;top:0;width:600;height:360;"><v:fill type="frame" src="${heroImageUrl}" /></v:rect>
-<v:shape filled="true" stroked="false" coordsize="180,180" style="position:absolute;left:420;top:0;width:180;height:180;" path="m 0,0 l 180,0 180,180 x e"><v:fill color="#f5f1ed" /></v:shape>
-<v:shape filled="true" stroked="false" coordsize="180,180" style="position:absolute;left:420;top:180;width:180;height:180;" path="m 180,0 l 180,180 0,180 x e"><v:fill color="#ef4734" /></v:shape>
-<v:rect filled="false" stroked="false" style="position:absolute;left:0;top:0;width:600;height:360;"><v:textbox style="v-text-anchor:middle" inset="0,0,0,0">
-<table role="presentation" width="100%" height="360" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:6px solid #ef4734">${issueTitle}</h1></td><td style="width:180px"></td></tr></table>
-</v:textbox></v:rect>
-</v:group>
-<![endif]-->
-<!--[if !mso]><!-->
-<div class="hero" style="background:url(${heroImageUrl}) no-repeat center center / cover;height:360px;"><table class="hero-table" role="presentation" width="100%" height="360" cellpadding="0" cellspacing="0" style="border-collapse:collapse"><tr><td style="width:20px"></td><td style="vertical-align:middle"><h1 style="font-size:32px;line-height:1;font-weight:700;color:rgb(255,255,255);margin:0;padding-left:8px;border-top:none;border-right:none;border-bottom:none;border-left:5px solid #ef4734">${issueTitle}</h1></td><td class="hero-tri-cell" style="width:130px;vertical-align:top;padding:0"><table class="hero-tri-table" role="presentation" cellpadding="0" cellspacing="0" width="130" style="border-collapse:collapse"><tr><td style="font-size:0;line-height:0"><div class="hero-tri-top" style="width:0;height:0;border-right:180px solid #f5f1ed;border-bottom:180px solid transparent"></div></td></tr><tr><td style="font-size:0;line-height:0"><div class="hero-tri-bottom" style="width:0;height:0;border-right:180px solid #ef4734;border-top:180px solid transparent"></div></td></tr></table></td></tr></table></div>
+                  <Img
+                    className="hero-desktop"
+                    src={heroImageUrl}
+                    alt="AEI Connect"
+                    width="600"
+                    style={{ width: "100%", display: "block" }}
+                  />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: `<!--[if !mso]><!-->
+<img class="hero-mobile" src="${mobileHeroImageUrl}" alt="AEI Connect" width="600" style="width:100%;display:none;max-height:0;overflow:hidden;" />
 <!--<![endif]-->`,
-                        }}
-                      />
-                    </tr>
-                  </table>
+                    }}
+                  />
                   <Section className="bg-aei-light-gray p-5">
                     {introText.split(/\n\n+/).map((paragraph, i) => (
                       <Heading
@@ -620,9 +597,10 @@ export const AEIConnect = ({
 
 export const defaultProps: AEIConnectProps = {
   previewText: "AEI Connect — insights, innovations, and news from across our teams.",
-  issueTitle: "AEI Connect",
   heroImageUrl:
-    "https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/hero.png",
+    "https://raw.githubusercontent.com/firebelly/aei-email-template/750cae55b961f643c9a1460d4aa48f4b01fcb039/emails/static/newsletter_hero_desktop.jpg",
+  mobileHeroImageUrl:
+    "https://raw.githubusercontent.com/firebelly/aei-email-template/750cae55b961f643c9a1460d4aa48f4b01fcb039/emails/static/newsletter_hero_mobile.jpg",
   introText:
     "Welcome to this month\u2019s edition of AEI Connect\u2014a curated roundup of insights, innovations, and news from across our teams. Explore what\u2019s new, what\u2019s next, and how we\u2019re designing smarter together.",
 
