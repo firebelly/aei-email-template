@@ -504,15 +504,12 @@ export const AEIConnect = ({
               -webkit-text-size-adjust: 100% !important;
               -ms-text-size-adjust: 100% !important;
             }
-            @media screen and (min-width: 600px) {
-              h1 { font-size: 42px !important; }
-              h2 { font-size: 17px !important; }
-              h3 { font-size: 15px !important; }
-              p, a { font-size: 14px !important; }
-              .footer p, .footer a { font-size: 12px !important; }
-              h1 { border-left-width: 6px !important; }
-            }
             @media screen and (max-width: 599px) {
+              h1 { font-size: 32px !important; border-left-width: 3px !important; }
+              h2 { font-size: 15px !important; }
+              h3 { font-size: 14px !important; }
+              p, a { font-size: 13px !important; }
+              .footer p, .footer a { font-size: 11px !important; }
               .article-col {
                 display: block !important;
                 width: 100% !important;
@@ -543,19 +540,24 @@ export const AEIConnect = ({
             }
 
           `}</style>
+          <span
+            dangerouslySetInnerHTML={{
+              __html: `<!--[if mso]><style>body, table, td, p, h1, h2, h3, a, span { font-family: Arial, Helvetica, sans-serif !important; }</style><![endif]-->`,
+            }}
+          />
         </Head>
         <Preview>{previewText}</Preview>
-        <Body className="bg-aei-quartz-gray font-sans" style={{ margin: "0", padding: "0" }}>
+        <Body className="bg-aei-quartz-gray font-sans" style={{ margin: "0", padding: "0", fontFamily: "Arial, Helvetica, sans-serif" }}>
           <table
             role="presentation"
             width="100%"
             cellPadding={0}
             cellSpacing={0}
-            style={{ margin: 0, padding: 0, borderCollapse: "collapse" }}
+            style={{ margin: 0, padding: 0, borderCollapse: "collapse", fontFamily: "Arial, Helvetica, sans-serif" }}
           >
             <tr>
               <td align="center" style={{ padding: "28px" }}>
-                <Container className="bg-white" style={{ width: "100%", maxWidth: "600px" }}>
+                <Container className="bg-white" style={{ width: "100%", maxWidth: "600px", fontFamily: "Arial, Helvetica, sans-serif" }}>
                   {/* ----------------------------------------------------------------
               Header — AEI logo
           ----------------------------------------------------------------- */}
@@ -610,9 +612,9 @@ export const AEIConnect = ({
                   {contentSections}
 
                   {/* ----------------------------------------------------------------
-              Footer
+              Footer — commented out; Constant Contact injects its own footer
           ----------------------------------------------------------------- */}
-                  <table
+                  {/* <table
                     role="presentation"
                     width="100%"
                     border={0}
@@ -667,7 +669,7 @@ export const AEIConnect = ({
                         }}
                       />
                     </tr>
-                  </table>
+                  </table> */}
                 </Container>
               </td>
             </tr>
