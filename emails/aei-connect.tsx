@@ -216,16 +216,13 @@ const NewsSection = ({
         <SectionHeading>{heading}</SectionHeading>
 
         {items.map((item, i) => (
-          <Row key={i} className={i < items.length - 1 ? "mb-2" : ""}>
-            <Column className="w-[12px] align-top pr-1">
-              <Text className="text-p text-aei-black m-0">•</Text>
-            </Column>
-            <Column className="align-top">
-              <Text className="text-p text-aei-black m-0">
-                {parseLinks(item.text, "text-aei-red underline")}
-              </Text>
-            </Column>
-          </Row>
+          <Text
+            key={i}
+            className={`text-p text-aei-black m-0${i < items.length - 1 ? " mb-2" : ""}`}
+            style={{ marginLeft: "12px", textIndent: "-13px" }}
+          >
+            •&nbsp;&nbsp;{parseLinks(item.text, "text-aei-red underline")}
+          </Text>
         ))}
       </td>
     </tr>
