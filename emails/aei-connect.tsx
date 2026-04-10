@@ -51,64 +51,75 @@ const ArticleGrid = ({
   articles,
   borderColor = "border-l-aei-purple",
   startWith = "text",
+  showDivider = false,
 }: {
   heading: string;
   articles: Article[];
   borderColor?: BorderColor;
   /** Which column appears first in the first row. Subsequent rows alternate. */
   startWith?: "text" | "image";
+  showDivider?: boolean;
 }) => (
-  <Section className="px-5 py-5">
-    <SectionHeading>{heading}</SectionHeading>
+  <table
+    role="presentation"
+    width="100%"
+    border={0}
+    cellPadding={0}
+    cellSpacing={0}
+    style={{ borderCollapse: "collapse" }}
+  >
+    <tr>
+      <td style={{ padding: "20px" }}>
+        <SectionHeading>{heading}</SectionHeading>
 
-    {articles.map((article, i) => {
-      const textFirst = startWith === "text" ? i % 2 === 0 : i % 2 !== 0;
-      const textCol = (
-        <td
-          key="text"
-          width="50%"
-          dir="ltr"
-          className={`article-col article-text w-1/2 align-top${i % 2 === 0 ? " bg-aei-light-gray" : ""}`}
-          style={{ width: "50%", verticalAlign: "top" }}
-        >
-          {article.heading && (
-            <Heading as="h3" className="text-h3 text-aei-black mt-2.5 mb-2 mx-2.5">
-              {article.heading}
-            </Heading>
-          )}
-          <Text
-            className={`text-p text-aei-black mx-2.5${article.heading ? " mt-0" : " mt-2.5"}${article.readMoreUrl ? " mb-0" : " mb-2.5"}`}
-          >
-            {parseLinks(article.description, "text-aei-red underline")}
-          </Text>
-          {article.readMoreUrl && (
-            <Text className={`text-p text-aei-black mt-2 mx-2.5 mb-2.5`}>
-              <Link href={article.readMoreUrl} className="text-p text-aei-red no-underline">
-                {article.readMoreText ?? "Read More →"}
-              </Link>
-            </Text>
-          )}
-        </td>
-      );
-      const imageCol = (
-        <td
-          key="image"
-          width="50%"
-          dir="ltr"
-          className="article-col article-img"
-          style={{
-            width: "50%",
-            verticalAlign: "top",
-            background: `url(${article.imageUrl}) no-repeat center top / cover`,
-            minHeight: "186px",
-            padding: "0",
-            fontSize: "0",
-            lineHeight: "0",
-            borderLeftColor: borderColorMap[borderColor],
-            borderLeftStyle: "none",
-          }}
-          dangerouslySetInnerHTML={{
-            __html: `
+        {articles.map((article, i) => {
+          const textFirst = startWith === "text" ? i % 2 === 0 : i % 2 !== 0;
+          const textCol = (
+            <td
+              key="text"
+              width="50%"
+              dir="ltr"
+              className={`article-col article-text w-1/2 align-top${i % 2 === 0 ? " bg-aei-light-gray" : " bg-white"}`}
+              style={{ width: "50%", verticalAlign: "top" }}
+            >
+              {article.heading && (
+                <Heading as="h3" className="text-h3 text-aei-black mt-2.5 mb-2 mx-2.5">
+                  {article.heading}
+                </Heading>
+              )}
+              <Text
+                className={`text-p text-aei-black mx-2.5${article.heading ? " mt-0" : " mt-2.5"}${article.readMoreUrl ? " mb-0" : " mb-2.5"}`}
+              >
+                {parseLinks(article.description, "text-aei-red underline")}
+              </Text>
+              {article.readMoreUrl && (
+                <Text className={`text-p text-aei-black mt-2 mx-2.5 mb-2.5`}>
+                  <Link href={article.readMoreUrl} className="text-p text-aei-red no-underline">
+                    {article.readMoreText ?? "Read More →"}
+                  </Link>
+                </Text>
+              )}
+            </td>
+          );
+          const imageCol = (
+            <td
+              key="image"
+              width="50%"
+              dir="ltr"
+              className="article-col article-img"
+              style={{
+                width: "50%",
+                verticalAlign: "top",
+                background: `url(${article.imageUrl}) no-repeat center top / cover`,
+                minHeight: "186px",
+                padding: "0",
+                fontSize: "0",
+                lineHeight: "0",
+                borderLeftColor: borderColorMap[borderColor],
+                borderLeftStyle: "none",
+              }}
+              dangerouslySetInnerHTML={{
+                __html: `
               <!--[if mso]>
               <img src="${article.imageUrl}" width="278" style="width:278px;display:block;" alt="" />
               <![endif]-->
@@ -116,71 +127,124 @@ const ArticleGrid = ({
               <div style="min-height:186px;font-size:0;line-height:0;">&nbsp;</div>
               <!--<![endif]-->
             `,
-          }}
-        />
-      );
+              }}
+            />
+          );
 
-      return (
-        <React.Fragment key={i}>
-          {i > 0 && (
-            <div style={{ height: "20px", lineHeight: "20px", fontSize: "1px" }}>&nbsp;</div>
-          )}
-          <table
-            role="presentation"
-            width="100%"
-            cellPadding={0}
-            cellSpacing={0}
-            style={{ borderCollapse: "collapse" }}
-          >
-            <tr>
-              <td
-                className="article-border"
-                style={{
-                  width: "3px",
-                  backgroundColor: borderColorMap[borderColor],
-                }}
-              />
-              <td style={{ padding: 0 }}>
-                <table
-                  role="presentation"
-                  width="100%"
-                  cellPadding={0}
-                  cellSpacing={0}
-                  dir={textFirst ? "rtl" : "ltr"}
-                  style={{ borderCollapse: "collapse" }}
-                >
-                  <tr>
-                    {imageCol}
-                    {textCol}
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </React.Fragment>
-      );
-    })}
-  </Section>
+          return (
+            <React.Fragment key={i}>
+              {i > 0 && (
+                <div style={{ height: "20px", lineHeight: "20px", fontSize: "1px" }}>&nbsp;</div>
+              )}
+              <table
+                role="presentation"
+                width="100%"
+                border={0}
+                cellPadding={0}
+                cellSpacing={0}
+                style={{ borderCollapse: "collapse" }}
+              >
+                <tr>
+                  <td
+                    className="article-border"
+                    style={{
+                      width: "3px",
+                      backgroundColor: borderColorMap[borderColor],
+                    }}
+                  />
+                  <td style={{ padding: 0 }}>
+                    <table
+                      role="presentation"
+                      width="100%"
+                      border={0}
+                      cellPadding={0}
+                      cellSpacing={0}
+                      dir={textFirst ? "rtl" : "ltr"}
+                      style={{ borderCollapse: "collapse" }}
+                    >
+                      <tr>
+                        {imageCol}
+                        {textCol}
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </React.Fragment>
+          );
+        })}
+      </td>
+    </tr>
+    {showDivider && (
+      <tr>
+        <td
+          style={{
+            backgroundColor: "#d1ccc1",
+            height: "1px",
+            lineHeight: "1px",
+            fontSize: "1px",
+            msoLineHeightRule: "exactly",
+          }}
+        >
+          &nbsp;
+        </td>
+      </tr>
+    )}
+  </table>
 );
 
 /** Bulleted news list section */
-const NewsSection = ({ heading, items }: { heading: string; items: NewsItem[] }) => (
-  <Section className="px-5 py-5">
-    <SectionHeading>{heading}</SectionHeading>
+const NewsSection = ({
+  heading,
+  items,
+  showDivider = false,
+}: {
+  heading: string;
+  items: NewsItem[];
+  showDivider?: boolean;
+}) => (
+  <table
+    role="presentation"
+    width="100%"
+    border={0}
+    cellPadding={0}
+    cellSpacing={0}
+    style={{ borderCollapse: "collapse" }}
+  >
+    <tr>
+      <td style={{ padding: "20px" }}>
+        <SectionHeading>{heading}</SectionHeading>
 
-    {items.map((item, i) => (
-      <Row key={i} className={i < items.length - 1 ? "mb-2" : ""}>
-        <Column className="w-[12px] align-top pr-1">
-          <Text className="text-p text-aei-black m-0">•</Text>
-        </Column>
-        <Column className="align-top">
-          <Text className="text-p text-aei-black m-0">
-            {parseLinks(item.text, "text-aei-red underline")}
-          </Text>
-        </Column>
-      </Row>
-    ))}
-  </Section>
+        {items.map((item, i) => (
+          <Row key={i} className={i < items.length - 1 ? "mb-2" : ""}>
+            <Column className="w-[12px] align-top pr-1">
+              <Text className="text-p text-aei-black m-0">•</Text>
+            </Column>
+            <Column className="align-top">
+              <Text className="text-p text-aei-black m-0">
+                {parseLinks(item.text, "text-aei-red underline")}
+              </Text>
+            </Column>
+          </Row>
+        ))}
+      </td>
+    </tr>
+    {showDivider && (
+      <tr>
+        <td
+          style={{
+            backgroundColor: "#d1ccc1",
+            height: "1px",
+            lineHeight: "1px",
+            fontSize: "1px",
+            msoLineHeightRule: "exactly",
+          }}
+        >
+          &nbsp;
+        </td>
+      </tr>
+    )}
+  </table>
 );
 
 /** Reusable full-width feature section with image, heading, description, and CTA */
@@ -188,69 +252,97 @@ const FeatureSection = ({
   sectionHeading,
   feature,
   borderColor = "border-l-aei-blue",
+  showDivider = false,
 }: {
   sectionHeading: string;
   feature: Feature;
   borderColor?: BorderColor;
+  showDivider?: boolean;
 }) => (
-  <Section className="px-5 py-5">
-    <SectionHeading>{sectionHeading}</SectionHeading>
+  <table
+    role="presentation"
+    width="100%"
+    border={0}
+    cellPadding={0}
+    cellSpacing={0}
+    style={{ borderCollapse: "collapse" }}
+  >
+    <tr>
+      <td style={{ padding: "20px" }}>
+        <SectionHeading>{sectionHeading}</SectionHeading>
 
-    <table
-      role="presentation"
-      width="100%"
-      border={0}
-      cellPadding={0}
-      cellSpacing={0}
-      style={{ borderCollapse: "collapse" }}
-    >
+        <table
+          role="presentation"
+          width="100%"
+          border={0}
+          cellPadding={0}
+          cellSpacing={0}
+          style={{ borderCollapse: "collapse" }}
+        >
+          <tr>
+            <td
+              style={{
+                borderLeft: `3px solid ${borderColorMap[borderColor]}`,
+                padding: 0,
+                lineHeight: 0,
+                fontSize: 0,
+              }}
+            >
+              <Img src={feature.imageUrl} alt={feature.imageAlt} width="557" className="w-full" style={{ display: "block" }} />
+            </td>
+          </tr>
+        </table>
+
+        <Heading as="h3" className="text-h3 text-aei-black my-3">
+          {feature.label && (
+            <>
+              {feature.label}
+              <br />
+            </>
+          )}
+          {feature.title}
+        </Heading>
+        <Text className="text-p text-aei-black my-0">
+          {parseLinks(feature.description, "text-aei-red underline")}
+        </Text>
+        {feature.ctaStyle === "button" ? (
+          <Text className="mt-3 mb-0">
+            <Button
+              href={feature.ctaUrl}
+              className="bg-aei-red text-white text-p py-2.5 px-5 no-underline"
+            >
+              {feature.ctaText}
+            </Button>
+          </Text>
+        ) : (
+          <Text className="mt-1 mb-0">
+            <Link
+              href={feature.ctaUrl}
+              className="text-p text-aei-red"
+              style={{ textDecoration: "none" }}
+            >
+              {feature.ctaText}
+            </Link>
+          </Text>
+        )}
+      </td>
+    </tr>
+    {showDivider && (
       <tr>
         <td
           style={{
-            borderLeft: `3px solid ${borderColorMap[borderColor]}`,
-            padding: 0,
-            lineHeight: 0,
-            fontSize: 0,
+            backgroundColor: "#d1ccc1",
+            height: "1px",
+            lineHeight: "1px",
+            fontSize: "1px",
+            msoLineHeightRule: "exactly",
           }}
         >
-          <Img src={feature.imageUrl} alt={feature.imageAlt} width="557" className="w-full" style={{ display: "block" }} />
+          &nbsp;
         </td>
       </tr>
-    </table>
-
-    <Heading as="h3" className="text-h3 text-aei-black my-3">
-      {feature.label && (
-        <>
-          {feature.label}
-          <br />
-        </>
-      )}
-      {feature.title}
-    </Heading>
-    <Text className="text-p text-aei-black my-0">
-      {parseLinks(feature.description, "text-aei-red underline")}
-    </Text>
-    {feature.ctaStyle === "button" ? (
-      <Text className="mt-3 mb-0">
-        <Button
-          href={feature.ctaUrl}
-          className="bg-aei-red text-white text-p py-2.5 px-5 no-underline"
-        >
-          {feature.ctaText}
-        </Button>
-      </Text>
-    ) : (
-      <Text className="mt-1 mb-0">
-        <Link
-          href={feature.ctaUrl}
-          className="text-p text-aei-red"
-          style={{ textDecoration: "none" }}
-        >
-          {feature.ctaText}
-        </Link>
-      </Text>
     )}
-  </Section>
+  </table>
 );
 
 // ---------------------------------------------------------------------------
@@ -351,7 +443,8 @@ export const AEIConnect = ({
   updateProfileUrl = defaultProps.updateProfileUrl,
   dataNoticeUrl = defaultProps.dataNoticeUrl,
 }: Partial<AEIConnectProps> = {}) => {
-  const contentSections = sections.map((section) => {
+  const contentSections = sections.map((section, i, arr) => {
+    const showDivider = i < arr.length - 1;
     switch (section.type) {
       case "article-grid":
         return (
@@ -361,6 +454,7 @@ export const AEIConnect = ({
             articles={section.articles}
             borderColor={section.borderColor}
             startWith={section.startWith}
+            showDivider={showDivider}
           />
         );
       case "feature":
@@ -370,10 +464,18 @@ export const AEIConnect = ({
             sectionHeading={section.sectionHeading}
             feature={section.feature}
             borderColor={section.borderColor}
+            showDivider={showDivider}
           />
         );
       case "news":
-        return <NewsSection key={section.id} heading={section.heading} items={section.items} />;
+        return (
+          <NewsSection
+            key={section.id}
+            heading={section.heading}
+            items={section.items}
+            showDivider={showDivider}
+          />
+        );
     }
   });
 
@@ -505,22 +607,7 @@ export const AEIConnect = ({
                   {/* ----------------------------------------------------------------
               Content sections with auto bottom borders
           ----------------------------------------------------------------- */}
-                  {contentSections.map((section, i, arr) => (
-                    <React.Fragment key={section.key}>
-                      {section}
-                      {i < arr.length - 1 && (
-                        <Section
-                          className="px-5"
-                          style={{
-                            borderTop: "0",
-                            borderRight: "0",
-                            borderLeft: "0",
-                            borderBottom: "1px solid #d1ccc1",
-                          }}
-                        />
-                      )}
-                    </React.Fragment>
-                  ))}
+                  {contentSections}
 
                   {/* ----------------------------------------------------------------
               Footer
