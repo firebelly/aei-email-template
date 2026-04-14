@@ -18,11 +18,11 @@ export default {
         },
       },
       fontSize: {
-        h1: ["32px", { lineHeight: "1", fontWeight: "700" }],
-        h2: ["15px", { lineHeight: "1", fontWeight: "700" }],
-        h3: ["14px", { lineHeight: "1.3", fontWeight: "400" }],
-        p: ["13px", { lineHeight: "1.4", fontWeight: "400" }],
-        "p-small": ["11px", { lineHeight: "1.2", fontWeight: "400" }],
+        h1: ["42px", { lineHeight: "1", fontWeight: "700" }],
+        h2: ["17px", { lineHeight: "1", fontWeight: "700" }],
+        h3: ["15px", { lineHeight: "1.3", fontWeight: "400" }],
+        p: ["14px", { lineHeight: "1.4", fontWeight: "400" }],
+        "p-small": ["12px", { lineHeight: "1.2", fontWeight: "400" }],
       },
       fontFamily: {
         sans: ["Arial", "Helvetica Neue", "Helvetica", "sans-serif"],
