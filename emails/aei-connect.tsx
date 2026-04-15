@@ -535,6 +535,7 @@ export const AEIConnect = ({
                 max-height: none !important;
               }
             }
+            .footer-container { background: #d1ccc1 !important; background-color: #d1ccc1 !important; }
 
           `}</style>
           <span
@@ -609,9 +610,9 @@ export const AEIConnect = ({
                   {contentSections}
 
                   {/* ----------------------------------------------------------------
-              Footer — commented out; Constant Contact injects its own footer
+              Footer
           ----------------------------------------------------------------- */}
-                  {/* <table
+                  <table
                     role="presentation"
                     width="100%"
                     border={0}
@@ -623,50 +624,32 @@ export const AEIConnect = ({
                     <tr>
                       <td
                         dangerouslySetInnerHTML={{
-                          __html: `<!--[if mso]>
-<v:group xmlns:v="urn:schemas-microsoft-com:vml" coordsize="600,164" style="width:600px;height:164px;">
-<v:rect filled="true" stroked="false" style="position:absolute;left:0;top:0;width:600;height:164;"><v:fill color="#f5f1ed" /></v:rect>
-<v:shape filled="true" stroked="false" coordsize="110,110" style="position:absolute;left:0;top:54;width:110;height:110;" path="m 0,110 l 110,110 0,0 x e"><v:fill color="#ef4734" /></v:shape>
-<v:rect filled="false" stroked="false" style="position:absolute;left:0;top:0;width:600;height:164;"><v:textbox style="v-text-anchor:top" inset="32px,36px,32px,32px">
+                          __html: `<!--[if gte mso 9]>
+<v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;height:172px;">
+<v:fill type="frame" src="https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/footer-strip.png" color="#f5f1ed" />
+<v:textbox inset="32px,36px,32px,32px">
+<![endif]-->
+<div style="background-color:#f5f1ed;background-image:linear-gradient(to top right, #ef4734 50%, transparent 50%);background-size:110px 110px;background-position:bottom left;background-repeat:no-repeat;padding:36px 32px 32px 32px;text-align:center;">
 <p style="font-size:11px;line-height:1.6;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:12px;text-align:center;">
 <a href="#" style="color:#282826;text-decoration:none;cursor:default;">${footerAddress}</a>
 </p>
 <p style="font-size:11px;line-height:1.4;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:24px;text-align:center;">
-<a href="${unsubscribeUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Unsubscribe</a>
-&nbsp;&nbsp;&nbsp;
-<a href="${updateProfileUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Update Profile</a>
-&nbsp;&nbsp;&nbsp;
+<a href="${unsubscribeUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Unsubscribe</a><!--[if mso]>&nbsp;&nbsp;&nbsp;<![endif]-->
+<a href="${updateProfileUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Update Profile</a><!--[if mso]>&nbsp;&nbsp;&nbsp;<![endif]-->
 <a href="${dataNoticeUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Constant Contact Data Notice</a>
 </p>
 <p style="margin:0;text-align:center;">
 <a href="https://www.constantcontact.com"><img src="https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/constant-contact-logo.png" alt="Constant Contact" width="110" height="32" style="display:inline-block;" /></a>
 </p>
-</v:textbox></v:rect>
-</v:group>
-<![endif]-->
-<!--[if !mso]><!-->
-<table width="100%" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-<tr>
-<td background="https://raw.githubusercontent.com/firebelly/aei-email-template/040eb9ff48e4dd69033b3ced63c2f9f31b9d1fda/emails/static/footer-triangle.png" style="background:url('https://raw.githubusercontent.com/firebelly/aei-email-template/040eb9ff48e4dd69033b3ced63c2f9f31b9d1fda/emails/static/footer-triangle.png') bottom left / 110px 110px no-repeat #f5f1ed;padding:36px 32px 32px 32px;text-align:center;">
-<p style="font-size:11px;line-height:1.6;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:12px;">
-<a href="#" style="color:#282826;text-decoration:none;cursor:default;">${footerAddress}</a>
-</p>
-<p style="font-size:11px;line-height:1.4;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:24px;">
-<a href="${unsubscribeUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Unsubscribe</a>
-<a href="${updateProfileUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Update Profile</a>
-<a href="${dataNoticeUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Constant Contact Data Notice</a>
-</p>
-<p style="margin:0;">
-<a href="https://www.constantcontact.com"><img src="https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/constant-contact-logo.png" alt="Constant Contact" width="110" height="32" style="display:inline-block;" /></a>
-</p>
-</td>
-</tr>
-</table>
-<!--<![endif]-->`,
+</div>
+<!--[if gte mso 9]>
+</v:textbox>
+</v:rect>
+<![endif]-->`,
                         }}
                       />
                     </tr>
-                  </table> */}
+                  </table>
                 </Container>
               </td>
             </tr>
