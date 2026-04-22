@@ -420,9 +420,6 @@ export interface AEIConnectProps {
   introText: string;
   sections: ContentSection[];
   footerAddress: string;
-  unsubscribeUrl: string;
-  updateProfileUrl: string;
-  dataNoticeUrl: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -436,9 +433,6 @@ export const AEIConnect = ({
   introText = defaultProps.introText,
   sections = defaultProps.sections,
   footerAddress = defaultProps.footerAddress,
-  unsubscribeUrl = defaultProps.unsubscribeUrl,
-  updateProfileUrl = defaultProps.updateProfileUrl,
-  dataNoticeUrl = defaultProps.dataNoticeUrl,
 }: Partial<AEIConnectProps> = {}) => {
   const contentSections = sections.map((section, i, arr) => {
     const showDivider = i < arr.length - 1;
@@ -631,12 +625,12 @@ export const AEIConnect = ({
 <![endif]-->
 <div style="background-color:#f5f1ed;background-image:url(https://files.constantcontact.com/ef6361aa001/6eeb222e-dfa8-4e6f-a8d6-892a56da5468.png);background-size:110px 110px;background-position:bottom left;background-repeat:no-repeat;padding:36px 32px 32px 32px;text-align:center;">
 <p style="font-size:11px;line-height:1.6;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:12px;text-align:center;">
-<a href="#" style="color:#282826;text-decoration:none;cursor:default;">${footerAddress}</a>
+<span style="color:#282826;">${footerAddress}</span>
 </p>
 <p style="font-size:11px;line-height:1.4;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:24px;text-align:center;">
-<a href="${unsubscribeUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Unsubscribe</a><!--[if mso]>&nbsp;&nbsp;&nbsp;<![endif]-->
-<a href="${updateProfileUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Update Profile</a><!--[if mso]>&nbsp;&nbsp;&nbsp;<![endif]-->
-<a href="${dataNoticeUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Constant Contact Data Notice</a>
+<a href="[[unsubscribe]]" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Unsubscribe</a><!--[if mso]>&nbsp;&nbsp;&nbsp;<![endif]-->
+<a href="[[updateLink]]" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Update Profile</a><!--[if mso]>&nbsp;&nbsp;&nbsp;<![endif]-->
+<a href="[[aboutctctlink]]" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Constant Contact Data Notice</a>
 </p>
 <p style="margin:0;text-align:center;">
 <a href="https://www.constantcontact.com"><img src="https://files.constantcontact.com/ef6361aa001/4e119ffa-1740-4262-a225-228a8732a586.png" alt="Constant Contact" width="110" height="32" style="display:inline-block;" /></a>
@@ -788,9 +782,6 @@ export const defaultProps: AEIConnectProps = {
   ],
 
   footerAddress: "Affiliated Engineers, Inc. | 5802 Research Park Blvd. Madison, WI 53719 US",
-  unsubscribeUrl: "https://aeieng.com",
-  updateProfileUrl: "https://aeieng.com",
-  dataNoticeUrl: "https://aeieng.com",
 };
 
 AEIConnect.PreviewProps = defaultProps;

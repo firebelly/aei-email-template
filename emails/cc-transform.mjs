@@ -1,13 +1,17 @@
 /**
- * Transforms a full HTML email document into a CC-ready fragment:
- * style blocks from <head> + <body>...</body> with a tracking pixel
- * injected after the opening body tag.
+ * Prepares React Email output for Constant Contact while keeping the file
+ * valid as a standalone HTML document.
  *
- * Shared between scripts/cc-export.mjs and the editor's Export button
- * so both produce identical output.
+ * Strips React Email's extra head scaffolding (preload links, MSO office
+ * settings, extra meta tags, SSR stream comments) and wraps the body in a
+ * minimal <html><head><style></head><body> shell. CC tolerates this and
+ * replaces the wrappers server-side; outside CC it renders in any browser.
+ * We don't embed [[trackingImage]] — CC injects its own pixel when absent.
+ *
+ * Shared between scripts/cc-export.mjs and the editor's Export button.
  */
 export function toCcHtml(html) {
-  const headMatch = html.match(/<head>([\s\S]*?)<\/head>/i);
+  const headMatch = html.match(/<head\b[^>]*>([\s\S]*?)<\/head>/i);
   const styleBlocks = [];
   if (headMatch) {
     const styleRegex = /<style\b[^>]*>([\s\S]*?)<\/style>/gi;
@@ -19,15 +23,19 @@ export function toCcHtml(html) {
     }
   }
 
-  const bodyMatch = html.match(/(<body[^>]*>[\s\S]*<\/body>)/i);
+  const bodyMatch = html.match(/<body\b[^>]*>[\s\S]*<\/body>/i);
   if (!bodyMatch) {
     throw new Error("Could not find <body> in HTML");
   }
 
-  const bodyWithTags = bodyMatch[1].replace(
-    /(<body[^>]*>)/i,
-    "$1[[trackingImage]]"
-  );
+  const body = bodyMatch[0].replace(/<!--\/?\$-->|<!--(?:html|head|body)-->/g, "");
 
-  return [...styleBlocks, bodyWithTags].join("\n");
+  return `<!DOCTYPE html>
+<html>
+<head>
+${styleBlocks.join("\n")}
+</head>
+${body}
+</html>
+`;
 }

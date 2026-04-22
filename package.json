@@ -7,6 +7,8 @@
     "build": "email build",
     "dev": "email dev",
     "export": "email export",
+    "export:cc": "email export && node scripts/cc-export.mjs",
+    "extract:eml": "node scripts/extract-eml.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",

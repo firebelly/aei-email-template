@@ -79,21 +79,6 @@ export function EditorForm({
             value={props.footerAddress}
             onChange={(v) => updateProps("footerAddress", v)}
           />
-          <TextField
-            label="Unsubscribe URL"
-            value={props.unsubscribeUrl}
-            onChange={(v) => updateProps("unsubscribeUrl", v)}
-          />
-          <TextField
-            label="Update Profile URL"
-            value={props.updateProfileUrl}
-            onChange={(v) => updateProps("updateProfileUrl", v)}
-          />
-          <TextField
-            label="Data Notice URL"
-            value={props.dataNoticeUrl}
-            onChange={(v) => updateProps("dataNoticeUrl", v)}
-          />
         </div>
       </details>
     </div>
