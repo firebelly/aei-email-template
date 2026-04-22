@@ -564,7 +564,7 @@ export const AEIConnect = ({
                       <Column className="w-full text-right">
                         <Link href="https://aeieng.com">
                           <Img
-                            src="https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/aei-logo.png"
+                            src="https://files.constantcontact.com/ef6361aa001/5f995a37-91df-4ae0-80ca-8044da394fb2.png"
                             alt="Affiliated Engineers, Inc."
                             width="125"
                             height="28"
@@ -625,11 +625,11 @@ export const AEIConnect = ({
                       <td
                         dangerouslySetInnerHTML={{
                           __html: `<!--[if gte mso 9]>
-<v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;height:172px;">
-<v:fill type="frame" src="https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/footer-strip.png" color="#f5f1ed" />
+<v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:450pt;height:129pt;">
+<v:fill type="frame" src="https://files.constantcontact.com/ef6361aa001/5a3a4c2e-01ac-4a44-b534-d3af681db645.png" color="#f5f1ed" />
 <v:textbox inset="32px,36px,32px,32px">
 <![endif]-->
-<div style="background-color:#f5f1ed;background-image:linear-gradient(to top right, #ef4734 50%, transparent 50%);background-size:110px 110px;background-position:bottom left;background-repeat:no-repeat;padding:36px 32px 32px 32px;text-align:center;">
+<div style="background-color:#f5f1ed;background-image:url(https://files.constantcontact.com/ef6361aa001/6eeb222e-dfa8-4e6f-a8d6-892a56da5468.png);background-size:110px 110px;background-position:bottom left;background-repeat:no-repeat;padding:36px 32px 32px 32px;text-align:center;">
 <p style="font-size:11px;line-height:1.6;font-weight:400;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;color:#282826;margin:0;margin-bottom:12px;text-align:center;">
 <a href="#" style="color:#282826;text-decoration:none;cursor:default;">${footerAddress}</a>
 </p>
@@ -639,7 +639,7 @@ export const AEIConnect = ({
 <a href="${dataNoticeUrl}" style="color:#282826;text-decoration:underline;display:inline-block;padding:4px 4px;">Constant Contact Data Notice</a>
 </p>
 <p style="margin:0;text-align:center;">
-<a href="https://www.constantcontact.com"><img src="https://raw.githubusercontent.com/firebelly/aei-email-template/refs/heads/main/emails/static/constant-contact-logo.png" alt="Constant Contact" width="110" height="32" style="display:inline-block;" /></a>
+<a href="https://www.constantcontact.com"><img src="https://files.constantcontact.com/ef6361aa001/4e119ffa-1740-4262-a225-228a8732a586.png" alt="Constant Contact" width="110" height="32" style="display:inline-block;" /></a>
 </p>
 </div>
 <!--[if gte mso 9]>
