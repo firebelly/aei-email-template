@@ -2,6 +2,8 @@ import { useState } from "react";
 import { render } from "@react-email/render";
 import { AEIConnect } from "@emails/aei-connect";
 import type { AEIConnectProps } from "@emails/aei-connect";
+// @ts-expect-error - plain ESM module, no types
+import { toCcHtml } from "@emails/cc-transform.mjs";
 import { getValidationErrors } from "../utils/validation";
 
 export function ExportButton({ props }: { props: AEIConnectProps }) {
@@ -13,11 +15,12 @@ export function ExportButton({ props }: { props: AEIConnectProps }) {
     setExporting(true);
     try {
       const html = await render(<AEIConnect {...props} />);
-      const blob = new Blob([html], { type: "text/html" });
+      const ccHtml = toCcHtml(html);
+      const blob = new Blob([ccHtml], { type: "text/html" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "aei-connect.html";
+      a.download = "aei-connect-cc.html";
       a.click();
       URL.revokeObjectURL(url);
     } catch (err) {
